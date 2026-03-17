@@ -24,6 +24,9 @@ Todo o pipeline — coleta via RSS+GDELT, análise com IA, score de Bhattacharyy
 
 Isso é BI aplicado ao jornalismo. E está 100% aberto no GitHub.
 
+🔗 Dashboard ao vivo → https://web-production-8d4b.up.railway.app
+📦 GitHub → github.com/deniciojunior/narrative-tracker
+
 Você leria as notícias diferente se soubesse o score de divergência de cada fonte?
 
 #AnalíseDeMídia #InteligênciaArtificial #DataJournalism #OpenSource #NarrativeTracker #BI #DataScience #Jornalismo
@@ -45,6 +48,7 @@ After processing 717 articles from 17 sources (March 1–17, 2026):
 
 The full stack — RSS/GDELT collection, AI classification, Bhattacharyya divergence scoring, Flask dashboard — costs under $0.03 to run.
 
+Live dashboard → https://web-production-8d4b.up.railway.app
 Open source on GitHub → github.com/deniciojunior/narrative-tracker
 
 Would you read news differently if every outlet had a divergence score?

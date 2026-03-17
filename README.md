@@ -49,15 +49,15 @@ RSS / GDELT feeds
 ```bash
 git clone https://github.com/deniciojunior/narrative-tracker
 cd narrative-tracker
-cp .env.example .env        # add your ANTHROPIC_API_KEY
-uv sync
-uv run src/collector.py     # collect historical data (GDELT)
-uv run src/analyzer.py      # analyze with Claude Haiku (~$0.03)
-uv run src/scorer.py        # calculate divergence scores
-uv run src/app.py           # dashboard at localhost:5000
+cp .env.example .env           # add your ANTHROPIC_API_KEY
+pip install -r requirements.txt
+python src/collector.py        # collect historical data (GDELT)
+python src/analyzer.py         # analyze with Claude Haiku (~$0.03)
+python src/scorer.py           # calculate divergence scores
+python src/app.py              # dashboard at localhost:5000
 
 # Continuous hourly updates via RSS:
-uv run src/scheduler.py
+python src/scheduler.py
 ```
 
 ## Tech stack
@@ -94,13 +94,13 @@ narrative-tracker/
 │   ├── collector.py        # GDELT + RSS collector
 │   ├── analyzer.py         # Claude Haiku classifier
 │   ├── scorer.py           # Bhattacharyya scorer
-│   └── scheduler.py        # Hourly automation
-├── templates/
-│   └── index.html          # Dashboard UI (Chart.js)
+│   ├── scheduler.py        # Hourly automation
+│   └── templates/
+│       └── index.html      # Dashboard UI (Chart.js)
 ├── articles.db             # SQLite (gitignored)
+├── requirements.txt        # Python dependencies
 ├── Procfile                # Railway/Heroku deploy
 ├── railway.toml            # Railway config
-├── pyproject.toml          # Dependencies (uv)
 └── .env.example            # Environment template
 ```
 

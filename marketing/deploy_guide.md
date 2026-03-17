@@ -58,7 +58,7 @@ Ou faz upload do `articles.db` via Railway Volume.
 
 ## Resultado esperado
 
-- Dashboard online 24/7 em `[projeto].up.railway.app`
+- Dashboard online 24/7 em https://web-production-8d4b.up.railway.app
 - Novos artigos coletados a cada hora
 - Análise e scores recalculados automaticamente
 - **Custo estimado**: $2–4/mês

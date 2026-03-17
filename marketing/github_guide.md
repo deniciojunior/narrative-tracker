@@ -16,7 +16,7 @@ git commit -m "feat: initial release — narrative tracker v1.0"
 
 ## 3. Conecta e faz push
 ```bash
-git remote add origin https://github.com/[SEU_USER]/narrative-tracker.git
+git remote add origin https://github.com/deniciojunior/narrative-tracker.git
 git branch -M main
 git push -u origin main
 ```
