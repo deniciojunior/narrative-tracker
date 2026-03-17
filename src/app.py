@@ -924,15 +924,16 @@ if __name__ == "__main__":
 
         def _scheduler_loop():
             import time
+            time.sleep(15)                # let Flask finish startup first
             cycle = 0
             while True:
-                time.sleep(3600)          # wait first, then run
                 cycle += 1
                 print(f"[scheduler] ciclo #{cycle} iniciando…", flush=True)
                 for script in ("collector.py", "analyzer.py", "scorer.py"):
                     _sp.run([_sys2.executable, str(_SRC / script)],
                             env={**os.environ, "PYTHONUNBUFFERED": "1"})
                 print(f"[scheduler] ciclo #{cycle} concluído.", flush=True)
+                time.sleep(3600)          # sleep AFTER running, not before
 
         t = threading.Thread(target=_scheduler_loop, daemon=True, name="scheduler")
         t.start()
