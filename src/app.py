@@ -59,14 +59,26 @@ DB_PATH = os.environ.get(
 )
 
 # ---------------------------------------------------------------------------
-# Seed database from committed snapshot on first deploy (volume empty check)
+# Seed database from committed snapshot on first deploy
 # ---------------------------------------------------------------------------
-_SEED_PATH = os.path.join(os.path.dirname(__file__), "..", "seed.db")
-if not os.path.exists(DB_PATH) and os.path.exists(_SEED_PATH):
-    import shutil
-    os.makedirs(os.path.dirname(os.path.abspath(DB_PATH)), exist_ok=True)
-    shutil.copy(_SEED_PATH, DB_PATH)
-    print(f"[seed] Database initialized from seed.db → {DB_PATH}", flush=True)
+import shutil as _shutil
+_HERE = os.path.dirname(os.path.abspath(__file__))
+_SEED_PATH = os.path.join(_HERE, "..", "seed.db")
+_DB_ABS = os.path.abspath(DB_PATH)
+print(f"[seed] DB_PATH={_DB_ABS}  seed={_SEED_PATH}  db_exists={os.path.exists(_DB_ABS)}  seed_exists={os.path.exists(_SEED_PATH)}", flush=True)
+if not os.path.exists(_DB_ABS) and os.path.exists(_SEED_PATH):
+    try:
+        _db_dir = os.path.dirname(_DB_ABS)
+        if _db_dir:
+            os.makedirs(_db_dir, exist_ok=True)
+        _shutil.copy(_SEED_PATH, _DB_ABS)
+        print(f"[seed] OK — copied seed.db → {_DB_ABS}", flush=True)
+    except Exception as _e:
+        print(f"[seed] FAILED — {_e} — falling back to default path", flush=True)
+        DB_PATH = os.path.join(_HERE, "..", "articles.db")
+        _DB_ABS = os.path.abspath(DB_PATH)
+        _shutil.copy(_SEED_PATH, _DB_ABS)
+        print(f"[seed] fallback OK — copied seed.db → {_DB_ABS}", flush=True)
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
