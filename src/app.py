@@ -53,7 +53,10 @@ def _call_claude(prompt: str) -> str:
         raise RuntimeError(f"Claude CLI auth failed: {out[:120]}")
     return out
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "articles.db")
+DB_PATH = os.environ.get(
+    "DB_PATH",
+    os.path.join(os.path.dirname(__file__), "..", "articles.db")
+)
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
@@ -881,5 +884,7 @@ def api_compass():
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    print("Dashboard: http://localhost:5000")
-    app.run(debug=True, host="0.0.0.0", port=5000, use_reloader=False)
+    port = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FLASK_ENV") == "development"
+    print(f"Dashboard: http://0.0.0.0:{port}")
+    app.run(debug=debug, host="0.0.0.0", port=port, use_reloader=False)
