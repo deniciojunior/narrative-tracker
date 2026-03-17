@@ -84,9 +84,9 @@ h1{{font-size:104px;font-weight:900;line-height:.88;letter-spacing:-.03em;
     <div class="sub">How 17 media outlets frame the same war — differently</div>
   </div>
   <div class="stats">
-    <div><div class="stat-n">717</div><div class="stat-l">Articles</div></div>
+    <div><div class="stat-n">781</div><div class="stat-l">Articles</div></div>
     <div><div class="stat-n">17</div><div class="stat-l">Sources</div></div>
-    <div><div class="stat-n">$0.03</div><div class="stat-l">API Cost</div></div>
+    <div><div class="stat-n">~$0.12</div><div class="stat-l">API Cost</div></div>
     <div><div class="stat-n">100%</div><div class="stat-l">Open Source</div></div>
   </div>
   <div class="hr hr-bot"></div>
@@ -148,7 +148,7 @@ h2{{font-size:68px;font-weight:900;line-height:.95;letter-spacing:-.025em;margin
       <div class="card cc">
         <div class="big" style="color:{GREEN}">38.5%</div>
         <div class="cname">Military frame</div>
-        <div class="cdesc">Most common narrative across all 717 articles analyzed</div>
+        <div class="cdesc">Most common narrative across all 781 articles analyzed</div>
       </div>
       <div class="card cd">
         <div class="big" style="color:{RED}">8.5%</div>
@@ -207,7 +207,7 @@ h2{{font-size:46px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}}
   <div class="content">
     <div class="eyebrow">Bhattacharyya Divergence Score · 0–100</div>
     <h2>Who diverges the most?</h2>
-    <div class="sub">Distance from global narrative consensus across 17 sources · 717 articles · March 2026</div>
+    <div class="sub">Distance from global narrative consensus across 17 sources · 781 articles · March 2026</div>
     <div class="chart">{bars}</div>
     <div class="legend">
       <div class="leg-dot" style="background:{RED}"></div><span>High divergence</span>
@@ -317,7 +317,7 @@ h2{{font-size:52px;font-weight:900;letter-spacing:-.02em;margin-bottom:6px}}
 <div class="wrap">
   <div class="sidebar"></div><div class="glr"></div>
   <div class="content">
-    <div class="eyebrow">Narrative Frame Distribution · 717 articles</div>
+    <div class="eyebrow">Narrative Frame Distribution · 781 articles</div>
     <h2>How is the war being framed?</h2>
     <div class="sub">7 possible narrative frames. One dominates — but the split varies wildly by source.</div>
     <div class="cols">
@@ -517,7 +517,7 @@ h2{{font-size:54px;font-weight:900;letter-spacing:-.02em;margin-bottom:28px}}
   <div class="grid"></div><div class="cglow"></div><div class="topbar"></div>
   <div class="content">
     <div class="eyebrow">How It Works</div>
-    <h2>The entire pipeline.<br>$0.03.</h2>
+    <h2>The entire pipeline.<br>~$0.12.</h2>
     <div class="pipeline">
       <div class="step"><div class="si">📡</div><div class="sn">Collect</div><div class="st">RSS+GDELT</div></div>
       <div class="arr">→</div>
@@ -530,11 +530,11 @@ h2{{font-size:54px;font-weight:900;letter-spacing:-.02em;margin-bottom:28px}}
       <div class="step"><div class="si">⚡</div><div class="sn">Deploy</div><div class="st">Railway</div></div>
     </div>
     <div class="cost">
-      <div class="costnum">$0.03</div>
+      <div class="costnum">~$0.12</div>
       <div class="costdet">
-        <div class="costtitle">Total API cost to analyze 717 articles</div>
+        <div class="costtitle">Total API cost to analyze 781 articles</div>
         <div class="costlist">
-          <span>717 articles</span> classified by Claude Haiku<br>
+          <span>781 articles</span> classified by Claude Haiku<br>
           ~$0.80 per million input tokens<br>
           Avg. 100 tokens per article<br>
           <span style="color:{GREEN}">Total: under 3 cents</span><br>
@@ -648,8 +648,8 @@ h2{{font-size:80px;font-weight:900;line-height:.92;letter-spacing:-.03em;margin-
     <div class="div"></div>
     <div class="body">
       Every article you read comes with a score.<br>
-      Every score comes from 717 real articles, 17 real sources,<br>
-      and $0.03 of AI analysis. Open source. Forever free.
+      Every score comes from 781 real articles, 17 real sources,<br>
+      and ~$0.12 of AI analysis. Open source. Forever free.
     </div>
     <div class="links">
       <div class="lbtn lprimary">🌐 <span class="mono">{LIVE_URL}</span></div>
