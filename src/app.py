@@ -928,11 +928,19 @@ if __name__ == "__main__":
             cycle = 0
             while True:
                 cycle += 1
-                print(f"[scheduler] ciclo #{cycle} iniciando…", flush=True)
+                print(f"[scheduler] ciclo #{cycle} iniciando… DB={os.environ.get('DB_PATH','?')}", flush=True)
                 for script in ("collector.py", "analyzer.py", "scorer.py"):
-                    _sp.run([_sys2.executable, str(_SRC / script)],
-                            env={**os.environ, "PYTHONUNBUFFERED": "1"})
-                print(f"[scheduler] ciclo #{cycle} concluído.", flush=True)
+                    print(f"[scheduler] rodando {script}…", flush=True)
+                    result = _sp.run(
+                        [_sys2.executable, str(_SRC / script)],
+                        env={**os.environ, "PYTHONUNBUFFERED": "1"},
+                        capture_output=True, text=True
+                    )
+                    if result.returncode != 0:
+                        print(f"[scheduler] ERRO em {script}: {result.stderr[-500:]}", flush=True)
+                    else:
+                        print(f"[scheduler] {script} OK", flush=True)
+                print(f"[scheduler] ciclo #{cycle} concluido.", flush=True)
                 time.sleep(3600)          # sleep AFTER running, not before
 
         t = threading.Thread(target=_scheduler_loop, daemon=True, name="scheduler")
