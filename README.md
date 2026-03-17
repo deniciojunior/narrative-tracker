@@ -15,7 +15,7 @@ This project analyzed **717 articles** from **17 English-language sources** cove
 
 ## Live demo
 
-> 🚀 **[Live Dashboard →](https://your-app.up.railway.app)**
+> 🚀 **[Live Dashboard →](https://web-production-8d4b.up.railway.app)**
 >
 > ⭐ Star this repo to follow updates as the conflict develops
 
@@ -47,7 +47,7 @@ RSS / GDELT feeds
 ## Quick start
 
 ```bash
-git clone https://github.com/[YOUR_USER]/narrative-tracker
+git clone https://github.com/deniciojunior/narrative-tracker
 cd narrative-tracker
 cp .env.example .env        # add your ANTHROPIC_API_KEY
 uv sync

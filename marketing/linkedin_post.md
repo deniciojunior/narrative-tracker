@@ -45,7 +45,7 @@ After processing 717 articles from 17 sources (March 1–17, 2026):
 
 The full stack — RSS/GDELT collection, AI classification, Bhattacharyya divergence scoring, Flask dashboard — costs under $0.03 to run.
 
-Open source on GitHub → github.com/[YOUR_USER]/narrative-tracker
+Open source on GitHub → github.com/deniciojunior/narrative-tracker
 
 Would you read news differently if every outlet had a divergence score?
 
