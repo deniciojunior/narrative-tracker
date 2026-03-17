@@ -58,6 +58,16 @@ DB_PATH = os.environ.get(
     os.path.join(os.path.dirname(__file__), "..", "articles.db")
 )
 
+# ---------------------------------------------------------------------------
+# Seed database from committed snapshot on first deploy (volume empty check)
+# ---------------------------------------------------------------------------
+_SEED_PATH = os.path.join(os.path.dirname(__file__), "..", "seed.db")
+if not os.path.exists(DB_PATH) and os.path.exists(_SEED_PATH):
+    import shutil
+    os.makedirs(os.path.dirname(os.path.abspath(DB_PATH)), exist_ok=True)
+    shutil.copy(_SEED_PATH, DB_PATH)
+    print(f"[seed] Database initialized from seed.db → {DB_PATH}", flush=True)
+
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # ---------------------------------------------------------------------------
