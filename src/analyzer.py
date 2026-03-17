@@ -26,7 +26,7 @@ load_dotenv()
 DB_PATH = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "..", "articles.db"))
 MODEL   = "claude-haiku-4-5-20251001"
 BATCH_SIZE  = 10
-MAX_WORKERS_SDK = 8   # SDK suporta mais paralelismo
+MAX_WORKERS_SDK = 3   # keep under 50 req/min rate limit
 MAX_WORKERS_SUB = 1   # subprocess: serial evita timeout/conflitos no claude.exe
 MAX_TOKENS  = 200
 
@@ -114,15 +114,22 @@ else:
 
 
 def _call_sdk(prompt_full: str, system: str = SYSTEM_PROMPT) -> tuple[str, int, int]:
-    """Chama a API via SDK; retorna (texto, in_tokens, out_tokens)."""
-    resp = _sdk_client.messages.create(
-        model=MODEL,
-        max_tokens=MAX_TOKENS,
-        temperature=0,
-        system=system,
-        messages=[{"role": "user", "content": prompt_full}],
-    )
-    return resp.content[0].text.strip(), resp.usage.input_tokens, resp.usage.output_tokens
+    """Chama a API via SDK; retorna (texto, in_tokens, out_tokens). Retry on 429."""
+    for attempt in range(3):
+        try:
+            resp = _sdk_client.messages.create(
+                model=MODEL,
+                max_tokens=MAX_TOKENS,
+                temperature=0,
+                system=system,
+                messages=[{"role": "user", "content": prompt_full}],
+            )
+            return resp.content[0].text.strip(), resp.usage.input_tokens, resp.usage.output_tokens
+        except Exception as e:
+            if "429" in str(e) and attempt < 2:
+                time.sleep(20 * (attempt + 1))  # 20s, then 40s
+                continue
+            raise
 
 
 def _call_subprocess(prompt_full: str, system: str = SYSTEM_PROMPT) -> tuple[str, int, int]:
