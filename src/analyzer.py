@@ -160,8 +160,22 @@ def _is_refusal(text: str) -> bool:
 # ---------------------------------------------------------------------------
 
 def get_db() -> sqlite3.Connection:
+    import sys as _sys
+    _sys.stderr.write(f"[analyzer] DB_PATH={DB_PATH}\n"); _sys.stderr.flush()
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
+    # Ensure schema exists (idempotent)
+    conn.execute("""CREATE TABLE IF NOT EXISTS analyses (
+        article_id   TEXT PRIMARY KEY,
+        frame        TEXT,
+        vocabulary   TEXT,
+        victim_actor TEXT,
+        tone         TEXT,
+        analyzed_at  TEXT
+    )""")
+    conn.commit()
+    _tbls = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()]
+    _sys.stderr.write(f"[analyzer] tables={_tbls}\n"); _sys.stderr.flush()
     return conn
 
 

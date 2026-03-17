@@ -34,6 +34,8 @@ FRAMES = [
 # ---------------------------------------------------------------------------
 
 def get_db() -> sqlite3.Connection:
+    import sys as _sys
+    _sys.stderr.write(f"[scorer] DB_PATH={DB_PATH}\n"); _sys.stderr.flush()
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
@@ -41,6 +43,15 @@ def get_db() -> sqlite3.Connection:
 
 def ensure_tables(conn: sqlite3.Connection):
     conn.executescript("""
+        CREATE TABLE IF NOT EXISTS analyses (
+            article_id   TEXT PRIMARY KEY,
+            frame        TEXT,
+            vocabulary   TEXT,
+            victim_actor TEXT,
+            tone         TEXT,
+            analyzed_at  TEXT
+        );
+
         CREATE TABLE IF NOT EXISTS divergence_scores (
             source          TEXT,
             date            TEXT,
