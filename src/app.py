@@ -59,26 +59,42 @@ DB_PATH = os.environ.get(
 )
 
 # ---------------------------------------------------------------------------
-# Seed database from committed snapshot on first deploy
+# Seed database from committed snapshot if articles table is empty/missing
 # ---------------------------------------------------------------------------
 import shutil as _shutil
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SEED_PATH = os.path.join(_HERE, "..", "seed.db")
 _DB_ABS = os.path.abspath(DB_PATH)
-print(f"[seed] DB_PATH={_DB_ABS}  seed={_SEED_PATH}  db_exists={os.path.exists(_DB_ABS)}  seed_exists={os.path.exists(_SEED_PATH)}", flush=True)
-if not os.path.exists(_DB_ABS) and os.path.exists(_SEED_PATH):
+
+def _needs_seed():
+    """True if DB missing or has no articles (empty file counts as needs seed)."""
+    if not os.path.exists(_DB_ABS):
+        return True
+    try:
+        _c = sqlite3.connect(_DB_ABS)
+        _n = _c.execute("SELECT COUNT(*) FROM articles").fetchone()[0]
+        _c.close()
+        return _n == 0
+    except Exception:
+        return True
+
+if _needs_seed() and os.path.exists(_SEED_PATH):
     try:
         _db_dir = os.path.dirname(_DB_ABS)
         if _db_dir:
             os.makedirs(_db_dir, exist_ok=True)
         _shutil.copy(_SEED_PATH, _DB_ABS)
-        print(f"[seed] OK — copied seed.db → {_DB_ABS}", flush=True)
+        print(f"[seed] OK — {_DB_ABS} initialized from seed.db", flush=True)
     except Exception as _e:
-        print(f"[seed] FAILED — {_e} — falling back to default path", flush=True)
+        print(f"[seed] volume copy failed ({_e}), using local path", flush=True)
         DB_PATH = os.path.join(_HERE, "..", "articles.db")
         _DB_ABS = os.path.abspath(DB_PATH)
         _shutil.copy(_SEED_PATH, _DB_ABS)
-        print(f"[seed] fallback OK — copied seed.db → {_DB_ABS}", flush=True)
+        print(f"[seed] OK fallback — {_DB_ABS}", flush=True)
+elif not os.path.exists(_SEED_PATH):
+    print("[seed] seed.db not found, skipping seed", flush=True)
+else:
+    print(f"[seed] DB already has data at {_DB_ABS}, skipping seed", flush=True)
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
