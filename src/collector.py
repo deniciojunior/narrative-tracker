@@ -16,9 +16,8 @@ import feedparser
 # Configuração
 # ---------------------------------------------------------------------------
 
-DB_PATH = "../articles.db"
 import os
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "articles.db")
+DB_PATH = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "..", "articles.db"))
 
 WAR_START = "2026-02-28"  # data de corte — artigos anteriores são ignorados
 

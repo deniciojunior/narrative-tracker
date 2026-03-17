@@ -23,7 +23,7 @@ load_dotenv()
 # Configuração
 # ---------------------------------------------------------------------------
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "articles.db")
+DB_PATH = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "..", "articles.db"))
 MODEL   = "claude-haiku-4-5-20251001"
 BATCH_SIZE  = 10
 MAX_WORKERS_SDK = 8   # SDK suporta mais paralelismo

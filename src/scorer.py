@@ -13,7 +13,7 @@ import re
 import sqlite3
 from collections import defaultdict
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "articles.db")
+DB_PATH = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "..", "articles.db"))
 
 STOPWORDS = {
     "the","a","an","in","on","at","to","of","and","or",
