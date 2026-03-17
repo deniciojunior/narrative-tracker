@@ -1,0 +1,4397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Narrative Tracker — US-Israel-Iran War 2026</title>
+<meta name="description" content="How 17 global media outlets frame the US-Israel-Iran war — analyzed in real time by AI.">
+<meta name="theme-color" content="#0D1117">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230D1117'/%3E%3Crect x='1' y='1' width='30' height='30' rx='5' fill='none' stroke='%23D29922' stroke-width='1.5'/%3E%3Ctext x='4' y='22' font-family='monospace' font-size='15' font-weight='700' fill='%23D29922'%3ENT%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* =====================================================================
+   ROOT VARIABLES
+   ===================================================================== */
+:root {
+  --bg-deep:       #080C10;
+  --bg-card:       #0D1117;
+  --bg-elevated:   #161B22;
+  --border:        #21262D;
+  --border-bright: #30363D;
+  --text-primary:  #E6EDF3;
+  --text-secondary:#8B949E;
+  --text-muted:    #6E7781;
+  --accent-amber:  #D29922;
+  --accent-red:    #F85149;
+  --accent-green:  #3FB950;
+  --accent-blue:   #58A6FF;
+  --shadow:        0 4px 24px rgba(0,0,0,0.4);
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --serif: 'IBM Plex Serif', serif;
+}
+:root[data-theme="dark"] {
+  --bg-deep: #080C10;
+  --bg-card: #0D1117;
+  --bg-elevated: #161B22;
+  --border: #21262D;
+  --border-bright: #30363D;
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7781;
+  --accent-amber: #D29922;
+  --accent-red: #F85149;
+  --accent-green: #3FB950;
+  --accent-blue: #58A6FF;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+:root[data-theme="light"] {
+  --bg-deep: #F6F8FA;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #F0F2F5;
+  --border: #D0D7DE;
+  --border-bright: #AFB8C1;
+  --text-primary: #1F2328;
+  --text-secondary: #636C76;
+  --text-muted: #6E7781;
+  --accent-amber: #9A6700;
+  --accent-red: #CF222E;
+  --accent-green: #1A7F37;
+  --accent-blue: #0969DA;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* =====================================================================
+   BASE
+   ===================================================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; transition: background-color .2s ease, border-color .2s ease, color .15s ease; }
+.live-pulse, .bar-fill, canvas { transition: none !important; }
+
+html { font-size: 15px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--sans);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* =====================================================================
+   SCROLL REVEAL
+   ===================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* =====================================================================
+   HERO
+   ===================================================================== */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-deep);
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 4rem;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-amber);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+}
+
+.hero-title em {
+  color: var(--accent-amber);
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border-bright);
+  border-radius: 2px;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+}
+
+.hero-badge.live {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.live-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent-red);
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.75); }
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  padding: 0.65rem 1.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.hero-cta:hover {
+  border-color: var(--accent-amber);
+  background: rgba(210,153,34,0.07);
+  color: var(--accent-amber);
+}
+
+/* Live bars visualization */
+.hero-bars-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 180px;
+}
+
+.hero-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-bar {
+  width: 26px;
+  border-radius: 2px 2px 0 0;
+  transition: height 1s ease;
+  min-height: 8px;
+}
+
+.hero-bar-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+
+.hero-bars-caption {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+@keyframes bar-pulse-1 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.94); } }
+@keyframes bar-pulse-2 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.97); } }
+@keyframes bar-pulse-3 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.91); } }
+@keyframes bar-pulse-4 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.96); } }
+@keyframes bar-pulse-5 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.93); } }
+@keyframes bar-pulse-6 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.98); } }
+@keyframes bar-pulse-7 { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(0.95); } }
+
+.hero-bar:nth-child(1) { animation: bar-pulse-1 2.1s ease-in-out infinite; transform-origin: bottom; }
+.hero-bar:nth-child(2) { animation: bar-pulse-2 2.7s ease-in-out infinite; transform-origin: bottom; }
+.hero-bar:nth-child(3) { animation: bar-pulse-3 3.2s ease-in-out infinite; transform-origin: bottom; }
+.hero-bar:nth-child(4) { animation: bar-pulse-4 1.9s ease-in-out infinite; transform-origin: bottom; }
+.hero-bar:nth-child(5) { animation: bar-pulse-5 2.4s ease-in-out infinite; transform-origin: bottom; }
+.hero-bar:nth-child(6) { animation: bar-pulse-6 2.9s ease-in-out infinite; transform-origin: bottom; }
+.hero-bar:nth-child(7) { animation: bar-pulse-7 3.5s ease-in-out infinite; transform-origin: bottom; }
+
+/* =====================================================================
+   STICKY NAV
+   ===================================================================== */
+#navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+#navbar.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-logo-mark {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--accent-amber);
+  border: 1px solid var(--accent-amber);
+  padding: 0.1rem 0.35rem;
+  line-height: 1.4;
+}
+
+.nav-logo-name {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text-primary); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+.nav-live {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--accent-red);
+}
+
+#navTimestamp { color: var(--text-muted); }
+
+/* =====================================================================
+   MAIN CONTENT WRAPPER
+   ===================================================================== */
+#main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.section-heading {
+  margin-bottom: 0.4rem;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.section-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+  font-family: var(--mono);
+}
+
+/* =====================================================================
+   METRICS CARDS
+   ===================================================================== */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.metric-card {
+  background: var(--bg-card);
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-left: 3px solid var(--text-muted);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 60%, rgba(255,255,255,0.01));
+  pointer-events: none;
+}
+
+.metric-value {
+  font-family: var(--mono);
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--accent-amber);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+
+.metric-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.metric-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* =====================================================================
+   GUIDED MODE
+   ===================================================================== */
+.guide-text {
+  display: none;
+  background: rgba(88,166,255,0.06);
+  border-left: 3px solid var(--accent-blue);
+  padding: 0.75rem 1rem;
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+  border-radius: 0 4px 4px 0;
+  line-height: 1.55;
+}
+
+body.guided .guide-text { display: block; }
+
+.guided-toggle {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  color: var(--text-muted);
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.guided-toggle.on {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* =====================================================================
+   CHART SECTION
+   ===================================================================== */
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  overflow: hidden; /* prevent heatmap from overflowing page */
+  min-width: 0;
+}
+
+.chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.pill-group {
+  display: flex;
+  gap: 4px;
+}
+
+.pill {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.7rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.pill:hover { border-color: var(--border-bright); color: var(--text-secondary); }
+
+.pill.active {
+  background: rgba(210,153,34,0.12);
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+  font-weight: 500;
+}
+
+.pill.inactive {
+  opacity: 0.35;
+  filter: grayscale(0.4);
+}
+
+.pill.source-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pill.source-pill .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pill.source-pill.inactive {
+  opacity: 0.35;
+  border-color: var(--border);
+}
+
+.events-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.events-toggle input[type=checkbox] {
+  accent-color: var(--accent-amber);
+  width: 13px; height: 13px;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 380px;
+}
+/* ── Heatmap ─────────────────────────────────────────────────────────── */
+.heatmap-outer { overflow-x: auto; padding: 0.25rem 0 0.5rem; }
+.heatmap-header { display: flex; align-items: flex-end; gap: 2px; margin-bottom: 4px; }
+.heatmap-row   { display: flex; align-items: center; gap: 2px; margin-bottom: 2px; }
+.heatmap-label { width: 108px; flex-shrink: 0; font-size: 10px; font-family: var(--mono); color: var(--text-secondary); text-align: right; padding-right: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.heatmap-date  { flex: 1; min-width: 22px; font-size: 8px; font-family: var(--mono); color: var(--text-muted); text-align: center; writing-mode: vertical-rl; transform: rotate(180deg); line-height: 1; padding: 2px 0; }
+.heatmap-cell  { flex: 1; min-width: 22px; height: 30px; border-radius: 3px; cursor: pointer; position: relative; transition: opacity .12s, filter .12s; }
+.heatmap-cell:hover { opacity: .75; filter: brightness(1.35); }
+.heatmap-cell.no-data { background: var(--bg-elevated) !important; opacity: .35; cursor: default; }
+.heatmap-tooltip {
+  position: fixed;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-primary);
+  max-width: 320px;
+  pointer-events: none;
+  z-index: 9999;
+  display: none;
+  box-shadow: var(--shadow);
+  line-height: 1.5;
+}
+.heatmap-tooltip-source { color: var(--accent-amber); font-weight: 600; margin-bottom: 4px; }
+.heatmap-tooltip-date   { color: var(--text-muted); font-size: 9px; margin-bottom: 8px; }
+.heatmap-tooltip-article { color: var(--text-secondary); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.heatmap-tooltip-score { color: var(--text-muted); font-size: 9px; margin-top: 6px; }
+.heatmap-scale { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 9px; font-family: var(--mono); color: var(--text-muted); }
+.heatmap-scale-bar { width: 120px; height: 8px; border-radius: 4px; background: linear-gradient(to right, hsl(120,58%,36%), hsl(60,58%,38%), hsl(0,58%,38%)); }
+[data-theme="light"] .heatmap-cell.no-data { background: var(--bg-elevated) !important; }
+
+.events-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.event-item {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.event-dot {
+  width: 6px; height: 6px;
+  background: rgba(210,153,34,0.6);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* =====================================================================
+   DNA GRID
+   ===================================================================== */
+.dna-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.dna-card {
+  background: var(--bg-card);
+  padding: 1.25rem;
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.dna-card:hover {
+  background: var(--bg-elevated);
+}
+
+.dna-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.dna-source-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.dna-score-badge {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.06);
+}
+
+.dna-bar-container {
+  height: 8px;
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.dna-bar-segment {
+  height: 100%;
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+.dna-bar-segment:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-primary);
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  margin-bottom: 4px;
+}
+
+.dna-vocab-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.55rem;
+}
+
+.dna-vocab {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+  min-height: 48px;
+}
+
+.dna-word {
+  display: inline-block;
+  padding: 0.18rem 0.45rem;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dna-footer {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
+  margin-top: auto;
+}
+
+/* =====================================================================
+   COMPARATOR
+   ===================================================================== */
+.comparator-layout {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.comparator-select-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.comp-select {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.comp-select:focus { outline: 1px solid var(--accent-amber); }
+
+.comp-vs {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding: 0.5rem;
+}
+
+.comp-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.comp-panel-header {
+  margin-bottom: 1rem;
+}
+
+.comp-source-name {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.comp-meta {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.comp-donut-wrap {
+  height: 140px;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.comp-vocab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.comp-vocab-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comp-vocab-word {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  width: 90px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comp-vocab-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.comp-vocab-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s;
+}
+
+.comp-latest {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  border-left: 2px solid var(--border-bright);
+  padding-left: 0.65rem;
+  line-height: 1.45;
+}
+
+.comp-tone-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 2px;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.comp-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  gap: 0.5rem;
+  text-align: center;
+  position: sticky;
+  top: 120px;
+}
+
+.comp-distance-num {
+  font-family: var(--mono);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--accent-amber);
+  line-height: 1;
+}
+
+.comp-distance-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.comp-distance-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  max-width: 120px;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+}
+
+/* =====================================================================
+   METHODOLOGY
+   ===================================================================== */
+#section-method {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 4rem 2rem;
+}
+
+.method-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.method-block {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.method-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.method-icon {
+  flex-shrink: 0;
+  color: var(--accent-amber);
+  margin-top: 2px;
+}
+
+.method-block-title {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: var(--text-primary);
+}
+
+.method-block-text {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.method-diagram {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.method-diagram-title {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.limitations-box {
+  border: 1px solid var(--accent-amber);
+  padding: 1rem 1.25rem;
+  background: rgba(210,153,34,0.04);
+}
+
+.limitations-title {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+  margin-bottom: 0.6rem;
+}
+
+.limitations-text {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* =====================================================================
+   ARTICLES FEED
+   ===================================================================== */
+.feed-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  align-items: center;
+}
+
+.feed-filter-sep {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  padding: 0 0.2rem;
+  align-self: center;
+}
+
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+}
+
+.feed-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: var(--bg-elevated); }
+
+.feed-item-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.feed-source-badge {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #fff;
+}
+
+.feed-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.45;
+}
+
+.feed-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.feed-time {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.badge-frame {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 0.12rem 0.4rem;
+  background: rgba(83,74,183,0.2);
+  color: #a89ef7;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+
+.badge-tone {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+
+.tone-neutral       { background: rgba(148,163,184,0.12); color: var(--text-muted); }
+.tone-alarmist      { background: rgba(248,81,73,0.15);   color: #fca5a5; }
+.tone-emotional     { background: rgba(210,153,34,0.15);  color: #fcd34d; }
+.tone-propagandistic{ background: rgba(200,60,40,0.2);    color: #fca5a5; }
+.tone-technical     { background: rgba(88,166,255,0.12);  color: #93c5fd; }
+
+.feed-expand {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  display: none;
+}
+
+.feed-expand.open { display: block; }
+
+.feed-explain {
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent-amber);
+  border-left: 2px solid var(--accent-amber);
+  padding-left: 0.6rem;
+  line-height: 1.5;
+}
+
+.feed-load-more {
+  display: block;
+  width: fit-content;
+  margin: 1.5rem auto 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  color: var(--text-secondary);
+  padding: 0.55rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feed-load-more:hover {
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+}
+
+/* =====================================================================
+   TOOLTIP
+   ===================================================================== */
+#tooltip-global {
+  position: fixed;
+  z-index: 9999;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-primary);
+  padding: 0.35rem 0.65rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  max-width: 260px;
+  line-height: 1.45;
+  border-radius: 2px;
+}
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+footer {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem 2rem;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-heading {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+  margin-bottom: 0.75rem;
+}
+
+.footer-text {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.footer-link {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.footer-link:hover { color: var(--accent-amber); }
+
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.tech-badge {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border-bright);
+  color: var(--text-muted);
+  border-radius: 2px;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* =====================================================================
+   MISC UTILITIES
+   ===================================================================== */
+.empty-state {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* =====================================================================
+   STATE OF THE ART — design system enhancements
+   ===================================================================== */
+
+/* ── Scrollbar ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+* { scrollbar-width: thin; scrollbar-color: var(--border-bright) var(--bg-deep); }
+
+/* ── Text selection ──────────────────────────────────────────────────── */
+::selection { background: rgba(210, 153, 34, 0.25); color: var(--text-primary); }
+
+/* ── Focus rings (accessible) ────────────────────────────────────────── */
+:focus-visible { outline: 2px solid var(--accent-amber); outline-offset: 2px; border-radius: 3px; }
+button:focus:not(:focus-visible) { outline: none; }
+
+/* ── Nav — glassmorphism backdrop blur ───────────────────────────────── */
+#navbar.visible {
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  background: rgba(13, 17, 23, 0.85);
+}
+
+/* ── Hero title — gradient accent ────────────────────────────────────── */
+.hero-title em {
+  background: linear-gradient(135deg, var(--accent-amber) 0%, #f0b429 60%, #e8832a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Metric cards — hover lift ───────────────────────────────────────── */
+.metric-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 1;
+  position: relative;
+}
+
+/* ── Section reveal animation ────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── DNA cards hover ─────────────────────────────────────────────────── */
+.dna-card { transition: border-color 0.2s, box-shadow 0.2s; }
+.dna-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+
+/* ── Feed items hover ────────────────────────────────────────────────── */
+.feed-item { transition: background 0.15s, border-left-color 0.15s; }
+.feed-item:hover { background: var(--bg-elevated) !important; }
+
+/* ── Pill buttons — smoother transitions ─────────────────────────────── */
+.pill { transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s; }
+.pill:active { transform: scale(0.96); }
+
+/* ── Footer links animated underline ────────────────────────────────── */
+.footer-link {
+  position: relative;
+  text-decoration: none;
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent-amber);
+  transition: width 0.25s ease;
+}
+.footer-link:hover::after { width: 100%; }
+.footer-link:hover { color: var(--text-primary) !important; }
+
+/* ── Audit modal — smooth open ───────────────────────────────────────── */
+#auditModal { transition: opacity 0.2s; }
+.audit-panel { transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s; }
+#auditModal[style*="display: block"] .audit-panel { transform: none; opacity: 1; }
+
+/* ── Number typography — tabular figures ─────────────────────────────── */
+.metric-value, .heatmap-date, .audit-formula-eq { font-variant-numeric: tabular-nums; }
+
+/* ── Code blocks ─────────────────────────────────────────────────────── */
+.audit-code {
+  position: relative;
+}
+.audit-code::before {
+  content: 'PROMPT';
+  position: absolute;
+  top: 0.5rem; right: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* =====================================================================
+   GLOBAL BASE — scroll anchors + touch + overflow
+   ===================================================================== */
+html { overflow-x: hidden; scroll-behavior: smooth; }
+
+section[id], [id^="section-"] { scroll-margin-top: 64px; }
+
+button, a, label, input, select {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Minimum touch target size */
+button { min-height: 36px; }
+.pill  { min-height: 30px; }
+
+/* =====================================================================
+   HAMBURGER NAV
+   ===================================================================== */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 9px;
+  cursor: pointer;
+  min-height: auto;
+}
+.nav-hamburger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--text-secondary);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 52px;
+  left: 0; right: 0;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  z-index: 199;
+  padding: 0.5rem 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.nav-mobile-menu.open { display: block; }
+.nav-mobile-menu a {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.15s, background 0.15s;
+}
+.nav-mobile-menu a:last-child { border-bottom: none; }
+.nav-mobile-menu a:hover, .nav-mobile-menu a:active {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+}
+
+/* =====================================================================
+   PREFERS REDUCED MOTION
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =====================================================================
+   RESPONSIVE — 900px (tablet/small desktop)
+   ===================================================================== */
+@media (max-width: 900px) {
+  .hero-inner           { grid-template-columns: 1fr; }
+  .metrics-grid         { grid-template-columns: repeat(2, 1fr); }
+  .dna-grid             { grid-template-columns: repeat(2, 1fr); }
+  .comparator-layout    { grid-template-columns: 1fr; }
+  .method-inner         { grid-template-columns: 1fr; }
+  .footer-inner         { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-bars            { display: none; }
+
+  /* Nav */
+  .nav-links            { display: none; }
+  .nav-hamburger        { display: flex; }
+  .nav-live, #navTimestamp { display: none; }
+
+  /* Spacing */
+  #main-content         { padding: 2.5rem 1.25rem; gap: 3rem; }
+  .hero-inner           { padding: 2.5rem 1.25rem; }
+  .chart-card           { padding: 1rem; }
+  #section-method       { margin: 0; padding: 3rem 1.25rem; }
+
+  /* Chart */
+  .chart-wrapper        { height: 300px; }
+  .chart-controls       { flex-wrap: wrap; gap: 0.5rem; }
+}
+
+/* =====================================================================
+   RESPONSIVE — 600px (mobile)
+   ===================================================================== */
+@media (max-width: 600px) {
+  .metrics-grid         { grid-template-columns: 1fr; }
+  .dna-grid             { grid-template-columns: 1fr; }
+  .comparator-dropdowns { flex-direction: column; gap: 0.5rem; }
+
+  /* Typography */
+  .section-title        { font-size: 1.4rem; }
+  .hero-subtitle        { font-size: 0.95rem; }
+  .metric-value         { font-size: 1.75rem; }
+
+  /* Spacing */
+  #main-content         { padding: 2rem 1rem; gap: 2.5rem; }
+  .hero-inner           { padding: 2rem 1rem; }
+  .chart-card           { padding: 0.85rem; }
+  #section-method       { margin: 0; padding: 2.5rem 1rem; }
+  .audit-body           { padding: 1.25rem; }
+  .audit-panel          { margin: 0.5rem; }
+  #auditModal           { padding: 0.75rem 0.5rem; }
+
+  /* Chart */
+  .chart-wrapper        { height: 240px; }
+
+  /* Filter bar */
+  #global-filter        { padding: 6px 12px; }
+  .gf-inner             { gap: 3px; row-gap: 4px; }
+
+  /* DNA cards */
+  .dna-vocab            { flex-wrap: wrap; }
+
+  /* Feed */
+  .feed-item            { padding: 0.85rem 1rem; }
+}
+
+/* =====================================================================
+   RESPONSIVE — 480px (small mobile)
+   ===================================================================== */
+@media (max-width: 480px) {
+  .metrics-grid         { gap: 0; }
+  .metric-card          { padding: 1.1rem 1rem 0.9rem; }
+  .metric-value         { font-size: 1.5rem; }
+  .metric-label         { font-size: 0.6rem; }
+
+  /* Comparator */
+  .comparator-donut-wrap { flex-direction: column; }
+
+  /* Heatmap — reduce cell size to fit more days */
+  .heatmap-label        { width: 80px; }
+  .heatmap-cell         { min-width: 16px; height: 24px; }
+  .heatmap-date         { min-width: 16px; }
+
+  /* Audit formula */
+  .audit-formula-line   { flex-direction: column; gap: 0.1rem; }
+  .audit-formula-label  { min-width: unset; }
+
+  /* Nav timestamp/live hidden already; also hide nav logo name */
+  .nav-logo-name        { display: none; }
+}
+
+/* =====================================================================
+   FILTER PILL BAR (cross-filter state)
+   ===================================================================== */
+#filter-pill-bar {
+  position: sticky;
+  top: 56px;
+  z-index: 90;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 24px;
+  display: none;
+}
+.pill-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-bright);
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all .15s;
+}
+.filter-pill:hover { border-color: var(--accent-amber); color: var(--text-primary); }
+.filter-pill .pill-x { color: var(--text-muted); font-size: 13px; line-height: 1; }
+.frame-pill { border-color: var(--accent-blue); }
+.pill-clear-all {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.pill-clear-all:hover { color: var(--accent-red); }
+
+/* =====================================================================
+   MICRO-INTERACTIONS
+   ===================================================================== */
+/* Feed article hover */
+.feed-item {
+  transition: background .15s ease, transform .15s ease;
+  cursor: pointer;
+}
+.feed-item:hover {
+  background: var(--bg-elevated);
+  transform: translateX(3px);
+}
+.feed-item .feed-arrow {
+  opacity: 0;
+  transition: opacity .15s;
+  color: var(--accent-amber);
+  font-size: 14px;
+  margin-left: auto;
+}
+.feed-item:hover .feed-arrow { opacity: 1; }
+
+/* Metric card hover */
+.metric-card {
+  transition: all .2s ease;
+  cursor: default;
+}
+.metric-card:hover {
+  border-color: var(--accent-amber);
+  box-shadow: 0 0 12px rgba(210,153,34,0.15);
+}
+
+/* Vocabulary pill hover */
+.vocab-pill {
+  transition: all .15s;
+  cursor: pointer;
+}
+.vocab-pill:hover {
+  background: var(--bg-elevated);
+  transform: scale(1.08);
+  border-color: var(--accent-blue);
+}
+
+/* Source card hover */
+.source-card {
+  transition: all .2s ease;
+  cursor: pointer;
+}
+.source-card:hover {
+  border-color: var(--accent-amber);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Lang toggle */
+.lang-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lang-toggle button {
+  background: none;
+  border: none;
+  padding: 4px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all .15s;
+  letter-spacing: .06em;
+}
+.lang-toggle button.active {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+.lang-toggle button:hover:not(.active) {
+  color: var(--text-secondary);
+}
+
+/* =====================================================================
+   GUIDED TOUR
+   ===================================================================== */
+.tour-overlay { position:fixed; inset:0; z-index:10000; display:flex; align-items:center; justify-content:center; }
+.tour-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.7); }
+.tour-panel { position:relative; background:var(--bg-elevated); border:1px solid var(--border-bright); border-radius:12px; padding:28px 32px; max-width:520px; width:90%; box-shadow:var(--shadow); }
+.tour-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.tour-step-badge { font-family:var(--mono); font-size:11px; color:var(--accent-amber); letter-spacing:.08em; }
+.tour-close-btn { background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:18px; line-height:1; }
+.tour-close-btn:hover { color:var(--text-primary); }
+.tour-body { font-size:14px; line-height:1.7; color:var(--text-secondary); min-height:120px; }
+.tour-body h3 { font-size:16px; font-weight:600; color:var(--text-primary); margin:0 0 10px; }
+.tour-body .tour-highlight { color:var(--accent-amber); font-weight:500; }
+.tour-body .tour-metric { display:inline-block; background:var(--bg-card); border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-family:var(--mono); font-size:12px; margin:2px; }
+.tour-footer { display:flex; justify-content:space-between; align-items:center; margin-top:20px; }
+.tour-btn { padding:8px 20px; border-radius:6px; font-family:var(--mono); font-size:12px; cursor:pointer; border:1px solid var(--border); transition:all .15s; }
+.tour-btn.primary { background:var(--accent-amber); border-color:var(--accent-amber); color:#000; }
+.tour-btn.primary:hover { opacity:.85; }
+.tour-btn.secondary { background:none; color:var(--text-secondary); }
+.tour-btn.secondary:hover { border-color:var(--border-bright); color:var(--text-primary); }
+.tour-btn:disabled { opacity:.35; cursor:default; }
+.tour-dots { display:flex; gap:6px; }
+.tour-dot { width:7px; height:7px; border-radius:50%; background:var(--border-bright); transition:background .15s; }
+.tour-dot.active { background:var(--accent-amber); }
+
+/* =====================================================================
+   COMPASS
+   ===================================================================== */
+.compass-wrap { position: relative; height: 420px; }
+
+/* =====================================================================
+   COLOR LEGENDS
+   ===================================================================== */
+.legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 0.5rem 0 1rem;
+}
+.legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  font-family: var(--mono);
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px 2px 5px;
+  white-space: nowrap;
+}
+.legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.legend-title {
+  font-size: 0.6rem;
+  font-family: var(--mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.score-legend-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 0.25rem 0 0.75rem;
+}
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #fff;
+}
+.tone-legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0 0 0.75rem;
+  align-items: center;
+}
+
+/* =====================================================================
+   AUDIT MODAL
+   ===================================================================== */
+#auditModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+  padding: 2rem 1rem;
+}
+.audit-panel {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.audit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+.audit-title {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+.audit-close {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: var(--mono);
+}
+.audit-close:hover { border-color: var(--border-bright); color: var(--text-primary); }
+.audit-body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.audit-section { display: flex; flex-direction: column; gap: 0.6rem; }
+.audit-section-title {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-amber);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.25rem;
+}
+.audit-code {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+.audit-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.audit-table th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.audit-table td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  vertical-align: top;
+}
+.audit-table tr:last-child td { border-bottom: none; }
+.audit-table td:first-child {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-primary);
+  white-space: nowrap;
+  padding-right: 1rem;
+}
+.audit-frame-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+.audit-api-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+}
+.audit-api-row:last-child { border-bottom: none; }
+.audit-api-method {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--accent-green);
+  background: var(--accent-green)18;
+  border-radius: 3px;
+  padding: 1px 6px;
+  flex-shrink: 0;
+}
+.audit-api-path {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent-blue);
+  flex-shrink: 0;
+}
+.audit-api-desc { color: var(--text-muted); font-size: 0.75rem; }
+.audit-formula {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 2;
+}
+.audit-formula .hl { color: var(--accent-amber); }
+.audit-formula-line {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.15rem 0;
+}
+.audit-formula-label {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  min-width: 160px;
+  flex-shrink: 0;
+}
+.audit-formula-eq {
+  color: var(--accent-amber);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+}
+.audit-section-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+.audit-section-note {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.audit-section-note code { font-family: var(--mono); color: var(--accent-blue); }
+.audit-api-list { display: flex; flex-direction: column; }
+
+/* Footer creator line */
+.footer-creator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+.footer-creator a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.footer-creator a:hover { text-decoration: underline; }
+
+/* =====================================================================
+   GLOBAL FILTER BAR
+   ===================================================================== */
+#global-filter {
+  position: sticky;
+  top: 56px;
+  z-index: 90;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 24px;
+  display: none;
+}
+.gf-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  row-gap: 6px;
+}
+.gf-label {
+  font-size: 0.6rem;
+  font-family: var(--mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 2px;
+  white-space: nowrap;
+}
+.gf-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-bright);
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================ Tooltip Global -->
+<div id="tooltip-global"></div>
+
+<!-- ================================================================ HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-label" data-i18n="hero.label">MEDIA INTELLIGENCE DASHBOARD</div>
+      <h1 class="hero-title"><span data-i18n="hero.title">The Same War,</span><br><em data-i18n="hero.title.em">Seven Narratives</em></h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">
+        How Al Jazeera, BBC, Reuters, RT, Xinhua and others describe
+        the same events in the US-Israel-Iran war — analyzed by AI
+      </p>
+      <div class="hero-badges">
+        <span class="hero-badge live"><span class="live-dot"></span><span data-i18n="hero.badge.live">● LIVE</span></span>
+        <span class="hero-badge" id="heroBadgeArticles"><span data-i18n="hero.badge.articles">ARTICLES ANALYZED</span></span>
+        <span class="hero-badge" id="heroBadgeSources"><span data-i18n="hero.badge.sources">SOURCES MONITORED</span></span>
+      </div>
+      <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
+        <button class="hero-cta" data-i18n="hero.cta" onclick="document.getElementById('main-content').scrollIntoView({behavior:'smooth'})">
+          Explore Dashboard ↓
+        </button>
+        <button class="guided-toggle" id="guidedBtn" onclick="toggleGuided()" data-i18n="guided.toggle.off">Guided Mode OFF</button>
+      </div>
+    </div>
+    <div class="hero-bars-wrap">
+      <div class="hero-bars" id="heroBars"></div>
+      <div class="hero-bars-caption" data-i18n="hero.bars.caption">Live narrative divergence</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="nav-logo-mark">NT</span>
+    <span class="nav-logo-name">Narrative Tracker</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#section-divergence" data-i18n="nav.divergence">Divergence</a></li>
+    <li><a href="#section-dna" data-i18n="nav.frames">Frames</a></li>
+    <li><a href="#section-compass" data-i18n="nav.compass">Compass</a></li>
+    <li><a href="#section-compare" data-i18n="nav.vocabulary">Vocabulary</a></li>
+    <li><a href="#section-method" data-i18n="nav.methodology">Methodology</a></li>
+    <li><a href="#section-feed" data-i18n="nav.articles">Articles</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="theme-toggle" onclick="setTheme(currentTheme==='dark'?'light':'dark')"
+      title="Switch to light mode"
+      style="background:none; border:1px solid var(--border); border-radius:6px; padding:4px 8px; cursor:pointer; color:var(--text-secondary); font-size:14px; line-height:1;">
+      ☀
+    </button>
+    <div class="lang-toggle">
+      <button id="lang-en" onclick="setLang('en')">EN</button>
+      <button id="lang-pt" onclick="setLang('pt')">PT</button>
+    </div>
+    <span class="nav-live"><span class="live-dot"></span><span data-i18n="hero.badge.live">LIVE</span></span>
+    <span id="navTimestamp">—</span>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav menu -->
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="#section-divergence" onclick="closeMobileMenu()" data-i18n="nav.divergence">Divergence</a>
+  <a href="#section-dna" onclick="closeMobileMenu()" data-i18n="nav.frames">Frames</a>
+  <a href="#section-compass" onclick="closeMobileMenu()" data-i18n="nav.compass">Compass</a>
+  <a href="#section-compare" onclick="closeMobileMenu()" data-i18n="nav.vocabulary">Vocabulary</a>
+  <a href="#section-method" onclick="closeMobileMenu()" data-i18n="nav.methodology">Methodology</a>
+  <a href="#section-feed" onclick="closeMobileMenu()" data-i18n="nav.articles">Articles</a>
+</div>
+
+<!-- ================================================================ GLOBAL FILTER -->
+<div id="global-filter">
+  <div class="gf-inner">
+    <span class="gf-label" data-i18n="filter.source">Source</span>
+    <div id="gf-sources" style="display:contents"></div>
+    <div class="gf-sep"></div>
+    <span class="gf-label" data-i18n="filter.frame">Frame</span>
+    <div id="gf-frames" style="display:contents"></div>
+    <span id="gf-count" style="font-family:var(--mono);font-size:0.62rem;color:var(--text-muted);white-space:nowrap;margin-left:6px"></span>
+    <button class="pill-clear-all" onclick="clearGlobalFilter()" id="gf-clear-btn" data-i18n="filter.clear_all">Clear all</button>
+  </div>
+</div>
+
+<!-- ================================================================ MAIN -->
+<div id="main-content">
+
+  <!-- 3. METRICS -->
+  <section id="section-metrics" class="reveal">
+    <div class="guide-text" data-i18n="guide.metrics">These four indicators summarize the current state of media coverage. The divergence score shows how fragmented the narrative is across sources. The higher it is, the more sources disagree on how to frame the conflict.</div>
+    <div class="metrics-grid">
+      <div class="metric-card" id="mc-divergence" style="border-left-color:var(--accent-red)">
+        <div class="metric-label" data-i18n="metrics.divergence.label">DIVERGENCE SCORE TODAY</div>
+        <div class="metric-value" id="mcDiv">—</div>
+        <div class="metric-sub" id="mcDivSub">—</div>
+      </div>
+      <div class="metric-card" id="mc-frame" style="border-left-color:var(--accent-amber)">
+        <div class="metric-label" data-i18n="metrics.frame.label">DOMINANT FRAME: MILITARY</div>
+        <div class="metric-value" id="mcFrame" style="font-size:1.5rem;padding-top:0.35rem">—</div>
+        <div class="metric-sub" id="mcFrameSub">—</div>
+      </div>
+      <div class="metric-card" id="mc-tone" style="border-left-color:var(--accent-amber)">
+        <div class="metric-label" data-i18n="metrics.tone.label">ALARMIST TONE</div>
+        <div class="metric-value" id="mcTone">—</div>
+        <div class="metric-sub" id="mcToneSub" data-i18n="metrics.tone.sub">highest since conflict began</div>
+      </div>
+      <div class="metric-card" id="mc-days" style="border-left-color:var(--accent-green)">
+        <div class="metric-label" data-i18n="metrics.days.label">CONFLICT ONGOING</div>
+        <div class="metric-value" id="mcDays">—</div>
+        <div class="metric-sub" data-i18n="metrics.days.sub">since Feb 28, 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. DIVERGENCE CHART -->
+  <section id="section-divergence" class="reveal">
+    <div class="section-heading">
+      <div class="section-title" data-i18n="section.divergence.title">How each source drifted from center</div>
+      <div class="section-sub" data-i18n="section.divergence.sub">Score 0 = narrative identical to global average | Score 100 = maximum divergence</div>
+      <div class="guide-text" data-i18n="guide.divergence">This chart shows the daily evolution of the divergence score for each source. A rising line means the source is using frames increasingly distinct from the global average. Hover over the chart to see details.</div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-controls">
+        <div class="pill-group" id="divPeriodBtns">
+          <button class="pill" data-days="7">7d</button>
+          <button class="pill" data-days="14">14d</button>
+          <button class="pill active" data-days="0" data-i18n="chart.period.all">All</button>
+        </div>
+        <div class="pill-group" id="divViewBtns">
+          <button class="pill active" id="viewHeatmapBtn" onclick="setDivView('heatmap')" data-i18n="chart.view_heatmap">Heatmap</button>
+          <button class="pill" id="viewLineBtn" onclick="setDivView('line')" data-i18n="chart.view_lines">Lines</button>
+        </div>
+        <label class="events-toggle">
+          <input type="checkbox" id="showEventsToggle" checked> <span data-i18n="chart.show_events">Show events</span>
+        </label>
+      </div>
+      <div class="chart-wrapper" id="divLineWrapper" style="display:none">
+        <canvas id="divergenceChart"></canvas>
+      </div>
+      <div id="divergenceHeatmap" class="heatmap-outer"></div>
+      <div class="events-legend" id="eventsLegend"></div>
+    </div>
+  </section>
+
+  <!-- 5. DNA GRID -->
+  <section id="section-dna" class="reveal">
+    <div class="section-heading">
+      <div class="section-title" data-i18n="section.frames.title">The narrative DNA of each source</div>
+      <div class="section-sub" data-i18n="section.frames.sub">Frame distribution and characteristic vocabulary this week</div>
+      <div class="guide-text" data-i18n="guide.dna">Each card shows how a source frames the conflict. The colored bar represents the proportion of each narrative frame. The vocabulary below shows terms with the highest TF-IDF score — words this source uses much more than the others.</div>
+    </div>
+    <div class="legend-row" id="frameLegend"></div>
+    <div class="dna-grid" id="dnaGrid">
+      <div class="empty-state" style="grid-column:1/-1" data-i18n="state.loading">Loading...</div>
+    </div>
+  </section>
+
+  <!-- COMPASS -->
+  <section id="section-compass" class="reveal">
+    <div class="section-heading">
+      <div class="section-title" data-i18n="compass.title">Editorial Compass</div>
+      <div class="section-sub" data-i18n="compass.sub">Where each source sits on two axes: tone (neutral → propagandistic) and frame lean (factual/military → narrative/geopolitical)</div>
+    </div>
+    <div class="chart-card">
+      <div class="compass-wrap">
+        <canvas id="compassChart" style="max-height:420px"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. COMPARATOR -->
+  <section id="section-compare" class="reveal">
+    <div class="section-heading">
+      <div class="section-title" data-i18n="section.compare.title">Compare two sources</div>
+      <div class="section-sub" data-i18n="section.compare.sub">Select two sources to see how they describe the same events</div>
+      <div class="guide-text" data-i18n="guide.compare">The comparator shows side by side the frame distribution, vocabulary and tone of two sources. The "narrative distance" in the center is calculated using the same Bhattacharyya metric as the main chart — the higher it is, the more divergent the sources are in how they describe the conflict.</div>
+    </div>
+    <div class="comparator-select-row">
+      <select class="comp-select" id="compSelectA"></select>
+      <span class="comp-vs" data-i18n="compare.vs">vs</span>
+      <select class="comp-select" id="compSelectB"></select>
+    </div>
+    <div class="comparator-layout" id="comparatorLayout">
+      <div class="empty-state" style="grid-column:1/-1" data-i18n="state.loading">Loading...</div>
+    </div>
+  </section>
+
+</div><!-- /main-content -->
+
+<!-- ================================================================ METHODOLOGY -->
+<section id="section-method">
+  <div class="method-inner reveal">
+    <div>
+      <div class="section-title" style="font-size:1.75rem;margin-bottom:2rem" data-i18n="section.methodology.title">How it works</div>
+
+      <div class="method-block">
+        <div class="method-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="16" height="12" rx="1"/><path d="M6 17h8M10 15v2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="method-block-title" data-i18n="method.gdelt.title">Collection via GDELT Project</div>
+          <p class="method-block-text" data-i18n="method.gdelt.text">
+            The Global Database of Events, Language, and Tone (GDELT) indexes news from
+            thousands of outlets in real time. We query the API hourly for conflict-related
+            articles, filtering by domain for the 7 selected sources.
+          </p>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2"/>
+          </svg>
+        </div>
+        <div>
+          <div class="method-block-title" data-i18n="method.ai.title">AI Classification</div>
+          <p class="method-block-text" data-i18n="method.ai.text">
+            Each headline and lead is sent to Claude Haiku (Anthropic) with a prompt that
+            extracts: narrative frame (7 categories), emotional tone (5 categories), and
+            revealing vocabulary. The model does not judge factual accuracy — it classifies
+            only how the text was written.
+          </p>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 17L8 10l4 4 3-5 4 8"/><path d="M3 3v14h14"/>
+          </svg>
+        </div>
+        <div>
+          <div class="method-block-title" data-i18n="method.score.title">Divergence Score (Bhattacharyya)</div>
+          <p class="method-block-text" data-i18n="method.score.text">
+            We compare each source's frame distribution against the daily global median
+            using Bhattacharyya distance — a statistical metric measuring overlap between
+            two probability distributions. Score 0 = the source describes the conflict
+            exactly like the average. Score 100 = completely different framing from all others.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="method-diagram">
+        <div class="method-diagram-title" data-i18n="method.diagram.title">Pipeline de dados</div>
+        <svg width="100%" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#484F58"/>
+            </marker>
+          </defs>
+          <!-- Boxes -->
+          <rect x="2"   y="80" width="50" height="28" rx="2" fill="#161B22" stroke="#30363D"/>
+          <rect x="72"  y="80" width="58" height="28" rx="2" fill="#161B22" stroke="#30363D"/>
+          <rect x="150" y="80" width="44" height="28" rx="2" fill="#161B22" stroke="#30363D"/>
+          <rect x="114" y="140" width="58" height="28" rx="2" fill="#161B22" stroke="#30363D"/>
+          <rect x="114" y="20" width="58" height="28" rx="2" fill="#161B22" stroke="#21262D"/>
+          <rect x="222" y="80" width="56" height="28" rx="2" fill="#161B22" stroke="#D29922" stroke-width="1.5"/>
+          <!-- Arrows -->
+          <line x1="52"  y1="94" x2="70"  y2="94" stroke="#484F58" stroke-width="1" marker-end="url(#arrow)"/>
+          <line x1="130" y1="94" x2="148" y2="94" stroke="#484F58" stroke-width="1" marker-end="url(#arrow)"/>
+          <line x1="172" y1="108" x2="172" y2="138" stroke="#484F58" stroke-width="1" marker-end="url(#arrow)"/>
+          <line x1="172" y1="80" x2="172" y2="50" stroke="#484F58" stroke-width="1" marker-end="url(#arrow)"/>
+          <line x1="194" y1="34" x2="235" y2="78" stroke="#484F58" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrow)"/>
+          <line x1="194" y1="154" x2="235" y2="110" stroke="#484F58" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrow)"/>
+          <!-- Labels -->
+          <text x="27"  y="98" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">GDELT</text>
+          <text x="101" y="91" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">collector</text>
+          <text x="101" y="101" font-family="IBM Plex Mono" font-size="6" fill="#484F58" text-anchor="middle">~168 arts</text>
+          <text x="172" y="91" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">SQLite</text>
+          <text x="172" y="101" font-family="IBM Plex Mono" font-size="6" fill="#484F58" text-anchor="middle">articles.db</text>
+          <text x="143" y="157" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">scorer.py</text>
+          <text x="143" y="167" font-family="IBM Plex Mono" font-size="6" fill="#484F58" text-anchor="middle">Bhattacharyya</text>
+          <text x="143" y="31" font-family="IBM Plex Mono" font-size="7" fill="#8B949E" text-anchor="middle">analyzer.py</text>
+          <text x="143" y="41" font-family="IBM Plex Mono" font-size="6" fill="#484F58" text-anchor="middle">Claude Haiku</text>
+          <text x="250" y="91" font-family="IBM Plex Mono" font-size="7" fill="#D29922" text-anchor="middle">Dashboard</text>
+          <text x="250" y="101" font-family="IBM Plex Mono" font-size="6" fill="#D29922" text-anchor="middle" opacity="0.6">Flask+Chart.js</text>
+        </svg>
+      </div>
+
+      <div class="limitations-box">
+        <div class="limitations-title" data-i18n="method.limits.title">Important limitations</div>
+        <div class="limitations-text" data-i18n="method.limits.text">
+          • GDELT returns mainly title+lead, not full text<br>
+          • Frame analysis is probabilistic, not deterministic<br>
+          • English sources only — Arabic/Hebrew versions may differ<br>
+          • Divergence score measures framing difference, not truthfulness
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ FEED -->
+<div id="main-content-2" style="max-width:1200px;margin:0 auto;padding:4rem 2rem">
+
+  <section id="section-feed" class="reveal">
+    <div class="section-heading" style="margin-bottom:1.25rem">
+      <div class="section-title" data-i18n="section.articles.title">Latest analyzed articles</div>
+      <div class="guide-text" data-i18n="guide.feed">Click on any article to expand and see the AI reasoning: why was this headline classified in this frame? The explanation is generated in real time by Claude Haiku.</div>
+    </div>
+    <div class="tone-legend-row" id="toneLegend"></div>
+    <div class="feed-list" id="feedList">
+      <div class="empty-state" data-i18n="state.loading_articles">Carregando artigos...</div>
+    </div>
+    <button class="feed-load-more" id="feedLoadMore" data-i18n="articles.load_more" onclick="loadMoreFeed()">Load 20 more articles</button>
+  </section>
+
+</div>
+
+<!-- ================================================================ FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-heading" data-i18n="footer.about.heading">About the project</div>
+      <p class="footer-text" data-i18n="footer.about">
+        Narrative Tracker analyzes how different media outlets frame the same conflict.
+        Open source project built with GDELT, Claude AI and Python.
+      </p>
+      <div class="footer-creator">
+        <span data-i18n="footer.by">by</span>
+        <a href="https://www.linkedin.com/in/deniciosantos/?locale=pt_BR" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Denicio Santos
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading" data-i18n="footer.links.heading">Links</div>
+      <div class="footer-links">
+        <a class="footer-link" href="#section-method" onclick="document.getElementById('section-method').scrollIntoView({behavior:'smooth'});return false;" data-i18n="footer.links.methodology">Methodology</a>
+        <a class="footer-link" href="#" onclick="openAudit();return false;" data-i18n="footer.links.audit">Transparency &amp; Audit</a>
+        <a class="footer-link" href="https://www.linkedin.com/in/deniciosantos/?locale=pt_BR" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading" data-i18n="footer.stack.heading">Tech stack</div>
+      <div class="tech-badges">
+        <span class="tech-badge">RSS Feeds</span>
+        <span class="tech-badge">Claude Haiku</span>
+        <span class="tech-badge">Flask</span>
+        <span class="tech-badge">Chart.js</span>
+        <span class="tech-badge">SQLite</span>
+        <span class="tech-badge">Python</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom" data-i18n="footer.disclaimer">
+    Data and analysis for informational and research purposes only. Does not represent the developer's editorial position.
+  </div>
+</footer>
+
+<!-- ================================================================ AUDIT MODAL -->
+<div id="auditModal" onclick="if(event.target===this)closeAudit()">
+  <div class="audit-panel">
+    <div class="audit-header">
+      <span class="audit-title" data-i18n="audit.title">Transparency &amp; Audit</span>
+      <button class="audit-close" onclick="closeAudit()" data-i18n="tour.close">Close</button>
+    </div>
+    <div class="audit-body" id="auditBody"></div>
+  </div>
+</div>
+
+<!-- ================================================================ SCRIPT -->
+<script>
+// ── Config injetada pelo Flask ──────────────────────────────────────────────
+const SOURCE_COLORS = {{ source_colors | tojson }};
+const FRAME_COLORS  = {{ frame_colors  | tojson }};
+
+const SOURCE_INFO = {
+  "Al Jazeera":   { pais: "Qatar",          orientacao: "Perspectiva do Golfo / pró-palestina" },
+  "BBC":          { pais: "Reino Unido",    orientacao: "Serviço público / tentativa de equilíbrio" },
+  "Reuters":      { pais: "Reino Unido",    orientacao: "Wire service / factual" },
+  "RT":           { pais: "Rússia",         orientacao: "Financiado pelo estado russo" },
+  "Xinhua":       { pais: "China",          orientacao: "Agência estatal chinesa" },
+  "The Guardian": { pais: "Reino Unido",    orientacao: "Centro-esquerda / progressista" },
+  "Haaretz":      { pais: "Israel",         orientacao: "Centro-esquerda israelense" },
+};
+
+const FRAMES_ORDER = ["humanitarian","military","geopolitical","terrorism","resistance","nuclear","diplomatic"];
+
+const EXPLICACOES_DATA = {
+  en: {
+    metrics:    "These indicators summarize the current state of coverage. The divergence score shows how much sources disagree in framing the conflict.",
+    divergence: "Each cell/line represents a source on a given day. The more intense the color (or higher the line), the further the source is from the global average narrative. Vertical lines mark conflict events.",
+    dna:        "Each card shows the narrative 'DNA' of a source: the proportion of each frame and the most characteristic vocabulary (calculated by TF-IDF).",
+    compare:    "Narrative distance is calculated with Bhattacharyya — it measures how much two probability distributions overlap. Frame + tone distributions are both factored in.",
+    feed:       "Click on an article to see the AI explanation of why that headline was classified in that frame.",
+  },
+  pt: {
+    metrics:    "Estes indicadores resumem o estado atual da cobertura. O score de divergência mostra o quanto as fontes discordam no enquadramento do conflito.",
+    divergence: "Cada célula/linha representa uma fonte em um dia. Quanto mais intensa a cor (ou mais alta a linha), mais distante está a fonte da narrativa média global. Linhas verticais marcam eventos do conflito.",
+    dna:        "Cada card mostra o 'DNA' narrativo de uma fonte: a proporção de cada frame e o vocabulário mais característico (calculado por TF-IDF).",
+    compare:    "A distância narrativa é calculada com Bhattacharyya — mede o quanto duas distribuições de probabilidade se sobrepõem. Distribuições de frame e tom são ambas consideradas.",
+    feed:       "Clique em um artigo para ver a explicação da IA sobre por que aquele headline foi classificado naquele frame.",
+  },
+};
+function getExplicacoes() { return EXPLICACOES_DATA[currentLang] || EXPLICACOES_DATA.en; }
+
+// ── State ────────────────────────────────────────────────────────────────────
+let divergenceChart   = null;
+let donutA = null, donutB = null;
+let currentDivDays    = 0;      // 0 = all
+let allSources        = [];
+let eventsData        = {};
+let showEvents        = true;
+const gf = { sources: new Set(), frames: new Set() }; // empty = ALL selected
+let feedOffset    = 0;
+let lastUpdatedAt = null;
+
+// ── Utils ────────────────────────────────────────────────────────────────────
+const esc = s => String(s||"")
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+const fmtDate = iso => iso ? iso.slice(0,10) : "—";
+const fmtTime = iso => iso ? (iso.slice(11,16)||"") : "";
+
+function divColor(v) {
+  if (v===null||v===undefined) return "var(--text-muted)";
+  if (v < 30) return "var(--accent-green)";
+  if (v < 60) return "var(--accent-amber)";
+  return "var(--accent-red)";
+}
+
+function toneBadgeClass(t) {
+  return "badge-tone tone-" + (t||"neutral").toLowerCase().replace(/[^a-z]/g,"");
+}
+
+function timeSince(isoStr) {
+  if (!isoStr) return "—";
+  const diff = Math.floor((Date.now() - new Date(isoStr)) / 60000);
+  if (diff < 1) return i18n[currentLang]["time.just_now"] || "just now";
+  if (diff < 60) return diff + " " + (i18n[currentLang]["time.min_ago"] || "min ago");
+  return Math.floor(diff/60) + (i18n[currentLang]["time.hr_ago"] || "h ago");
+}
+
+// ── Tooltip global ───────────────────────────────────────────────────────────
+const ttEl = document.getElementById("tooltip-global");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tooltip]");
+  if (t) {
+    ttEl.textContent = t.dataset.tooltip;
+    ttEl.style.opacity = "1";
+    ttEl.style.left = Math.min(e.clientX + 12, window.innerWidth - 280) + "px";
+    ttEl.style.top  = (e.clientY - 36) + "px";
+  } else {
+    ttEl.style.opacity = "0";
+  }
+});
+
+// ── Scroll reveal ────────────────────────────────────────────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); revealObs.unobserve(e.target); } });
+}, { threshold: 0, rootMargin: "0px 0px -60px 0px" });
+
+document.querySelectorAll(".reveal").forEach(el => revealObs.observe(el));
+
+// ── Sticky nav ───────────────────────────────────────────────────────────────
+const navbar = document.getElementById("navbar");
+const heroEl = document.getElementById("hero");
+new IntersectionObserver(entries => {
+  navbar.classList.toggle("visible", !entries[0].isIntersecting);
+}, { threshold: 0 }).observe(heroEl);
+
+// ── Guided mode ──────────────────────────────────────────────────────────────
+function toggleGuided() {
+  openTour();
+}
+function _toggleGuidedOld() {
+  document.body.classList.toggle("guided");
+  const on = document.body.classList.contains("guided");
+  const btn = document.getElementById("guidedBtn");
+  btn.textContent = i18n[currentLang][on ? "guided.toggle.on" : "guided.toggle.off"] || (on ? "Guided Mode ON" : "Guided Mode OFF");
+  btn.classList.toggle("on", on);
+}
+
+// ── Counter animation ────────────────────────────────────────────────────────
+function animateCounter(el, target, suffix="", duration=1200) {
+  const start = performance.now();
+  const isFloat = String(target).includes(".");
+  const step = now => {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    const cur = isFloat
+      ? (target * ease).toFixed(1)
+      : Math.round(target * ease);
+    el.textContent = cur + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Observe metric cards for counter animation
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll("[data-count]").forEach(el => {
+        const val  = parseFloat(el.dataset.count);
+        const suf  = el.dataset.suffix || "";
+        animateCounter(el, val, suf);
+      });
+      counterObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+counterObs.observe(document.getElementById("section-metrics"));
+
+// ── Load Stats ───────────────────────────────────────────────────────────────
+async function loadStats() {
+  const d = await fetch("/api/stats").then(r=>r.json()).catch(()=>({}));
+
+  // Hero badges
+  const totalArticles = d.total_articles || 0;
+  const sourcesCount  = d.sources_count  || 0;
+  const badgeArticles = document.getElementById("heroBadgeArticles");
+  if (badgeArticles) {
+    const tmpl = i18n[currentLang]["hero.badge.articles.full"] || "{n} ARTICLES ANALYZED";
+    badgeArticles.textContent = tmpl.replace("{n}", totalArticles);
+  }
+  const badgeSources = document.getElementById("heroBadgeSources");
+  if (badgeSources) {
+    const tmpl = i18n[currentLang]["hero.badge.sources.full"] || "{n} SOURCES MONITORED";
+    badgeSources.textContent = tmpl.replace("{n}", sourcesCount);
+  }
+
+  // Hero title — update "Seven Narratives" dynamically with i18n support
+  const n = d.sources_count || 0;
+  const words_en = ["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
+                    "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen","Twenty"];
+  const words_pt = ["Zero","Um","Dois","Três","Quatro","Cinco","Seis","Sete","Oito","Nove","Dez",
+                    "Onze","Doze","Treze","Quatorze","Quinze","Dezesseis","Dezessete","Dezoito","Dezenove","Vinte"];
+  const label_en = (n > 0 && n < words_en.length) ? words_en[n] : String(n);
+  const label_pt = (n > 0 && n < words_pt.length) ? words_pt[n] : String(n);
+  i18n.en["hero.title.em"] = label_en + " Narratives";
+  i18n.pt["hero.title.em"] = label_pt + " Narrativas";
+  const heroEm = document.querySelector(".hero-title em");
+  if (heroEm) heroEm.textContent = i18n[currentLang]["hero.title.em"];
+
+  // Metrics — days since start
+  const start = new Date("2026-02-28");
+  const days  = Math.max(0, Math.floor((Date.now() - start) / 86400000));
+
+  // Set data-count for counter animation
+  const mcDiv = document.getElementById("mcDiv");
+  if (d.divergence_today !== null && d.divergence_today !== undefined) {
+    mcDiv.dataset.count   = d.divergence_today;
+    mcDiv.dataset.suffix  = "";
+    mcDiv.textContent     = d.divergence_today.toFixed(1);
+    mcDiv.style.color     = divColor(d.divergence_today);
+    document.getElementById("mc-divergence").style.borderLeftColor = divColor(d.divergence_today);
+    // Normalize PT labels from backend → canonical keys
+    const rawLabelRaw = d.divergence_label || "today";
+    const rawLabel = rawLabelRaw === "hoje" ? "today" : rawLabelRaw === "ontem" ? "yesterday" : rawLabelRaw;
+    const divSub = document.getElementById("mcDivSub");
+    divSub.dataset.rawLabel = rawLabel;
+    const translatedLabel = i18n[currentLang]["time." + rawLabel] || rawLabel;
+    divSub.textContent = (i18n[currentLang]["metrics.divergence.dynamic"] || "divergence") + " " + translatedLabel;
+  }
+
+  const mcDaysEl = document.getElementById("mcDays");
+  mcDaysEl.dataset.rawDays = days;
+  mcDaysEl.textContent = days + " " + (i18n[currentLang]["metrics.days.dynamic"] || "days");
+
+  // Timestamps
+  lastUpdatedAt = d.last_updated;
+  const ts = d.last_updated ? d.last_updated.slice(0,16).replace("T"," ") + " UTC" : "—";
+  document.getElementById("navTimestamp").textContent = timeSince(d.last_updated);
+}
+
+// ── Load dominant frame + tone stats ─────────────────────────────────────────
+async function loadMetricsExtra() {
+  const data = await fetch("/api/frames?source=ALL&days=7")
+    .then(r=>r.json()).catch(()=>({frames:{}}));
+
+  // Aggregate frame counts across all sources
+  const totals = {};
+  Object.values(data.frames||{}).forEach(fmap => {
+    Object.entries(fmap).forEach(([f,c]) => { totals[f] = (totals[f]||0) + c; });
+  });
+  const totalAll = Object.values(totals).reduce((a,b)=>a+b,0) || 1;
+  const dominant = Object.entries(totals).sort((a,b)=>b[1]-a[1])[0];
+  if (dominant) {
+    const pct = Math.round(dominant[1]/totalAll*100);
+    const mcFrameEl = document.getElementById("mcFrame");
+    mcFrameEl.textContent = t('frame.' + dominant[0], dominant[0]);
+    mcFrameEl.dataset.rawFrame = dominant[0];
+    const mcFrameSub = document.getElementById("mcFrameSub");
+    mcFrameSub.dataset.rawPct = pct;
+    mcFrameSub.textContent = pct + (i18n[currentLang]["metrics.frame.pct"] || "% this week");
+  }
+
+  // Tone: fetch timeline for alarmist count
+  const tl = await fetch("/api/timeline?limit=200").then(r=>r.json()).catch(()=>[]);
+  const alarmist = tl.filter(a => (a.tone||"").toLowerCase() === "alarmist").length;
+  const alPct = tl.length ? Math.round(alarmist/tl.length*100) : 0;
+  document.getElementById("mcTone").textContent = alPct + "%";
+  document.getElementById("mcTone").style.color = alPct > 30 ? "var(--accent-red)" : "var(--accent-amber)";
+  document.getElementById("mc-tone").style.borderLeftColor = alPct > 30 ? "var(--accent-red)" : "var(--accent-amber)";
+}
+
+// ── Hero Bars ────────────────────────────────────────────────────────────────
+async function loadHeroBars(sources, divScores) {
+  const container = document.getElementById("heroBars");
+  if (!sources.length) return;
+  container.innerHTML = "";
+
+  const maxScore = Math.max(...sources.map(s => divScores[s]||20), 1);
+
+  sources.forEach((src, i) => {
+    const score   = divScores[src] || 20;
+    const heightPx = Math.round(20 + (score / maxScore) * 140);
+    const color   = SOURCE_COLORS[src] || "#888";
+    const shortName = src.split(" ")[0].toUpperCase().slice(0,3);
+
+    const col = document.createElement("div");
+    col.className = "hero-bar-col";
+    col.innerHTML = `
+      <div class="hero-bar" style="height:${heightPx}px;background:${color};animation-delay:${i*0.15}s"></div>
+      <span class="hero-bar-label" style="color:${color}" data-tooltip="${src} — score ${score}">${shortName}</span>`;
+    container.appendChild(col);
+  });
+}
+
+// ── Divergence Chart ──────────────────────────────────────────────────────────
+async function loadDivergenceChart(days) {
+  currentDivDays = days;
+
+  const url = days > 0 ? "/api/divergence?days=" + days : "/api/divergence?days=60";
+  const [chartData, events] = await Promise.all([
+    fetch(url).then(r=>r.json()).catch(()=>({dates:[],series:[]})),
+    fetch("/api/events").then(r=>r.json()).catch(()=>({})),
+  ]);
+  eventsData = events;
+  lastChartData = chartData;
+  lastEventsData = events;
+
+  const dates  = chartData.dates  || [];
+  const series = chartData.series || [];
+
+  // Heatmap view (default)
+  if (currentDivView === 'heatmap') {
+    renderHeatmap(chartData, events);
+    return;
+  }
+
+  renderLineChart(chartData, events);
+}
+
+function renderLineChart(chartData, events) {
+  const dates  = chartData.dates  || [];
+  const series = chartData.series || [];
+  const eventPlugin = {
+    id: "eventLines2",
+    afterDraw(chart) {
+      if (!showEvents) return;
+      const ctx2 = chart.ctx, xAxis = chart.scales.x, yAxis = chart.scales.y;
+      if (!xAxis || !yAxis) return;
+      Object.keys(events).forEach(date => {
+        const idx = dates.indexOf(date);
+        if (idx < 0) return;
+        const xPos = xAxis.getPixelForValue(idx);
+        if (!xPos || isNaN(xPos)) return;
+        ctx2.save();
+        ctx2.beginPath();
+        ctx2.setLineDash([4,4]);
+        ctx2.strokeStyle = "rgba(210,153,34,0.5)";
+        ctx2.lineWidth   = 1.5;
+        ctx2.moveTo(xPos, yAxis.top);
+        ctx2.lineTo(xPos, yAxis.bottom);
+        ctx2.stroke();
+        ctx2.restore();
+      });
+    },
+  };
+  const datasets = series.map(s => ({
+    label:            s.source,
+    data:             s.data,
+    borderColor:      s.color,
+    backgroundColor:  s.color + "0D",
+    fill:             true,
+    borderWidth:      (s.avg_score||0) > 60 ? 3 : 2,
+    pointRadius:      0,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: s.color,
+    tension:          0.35,
+    spanGaps:         true,
+    hidden:           gf.sources.size > 0 && !gf.sources.has(s.source),
+  }));
+
+  if (divergenceChart) divergenceChart.destroy();
+
+  const ctx = document.getElementById("divergenceChart").getContext("2d");
+  divergenceChart = new Chart(ctx, {
+    type: "line",
+    plugins: [eventPlugin],
+    data: { labels: dates, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      onClick: (event, elements) => {
+        if (elements.length > 0) {
+          const dsIndex = elements[0].datasetIndex;
+          const sourceName = divergenceChart.data.datasets[dsIndex].label;
+          toggleSourceFilter(sourceName);
+        }
+      },
+      onHover: (event, elements) => {
+        if (event.native) event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#161B22",
+          borderWidth: 1,
+          titleColor: "#E6EDF3",
+          bodyColor:  "#8B949E",
+          padding: 10,
+          callbacks: {
+            beforeTitle(items) {
+              const label = items[0]?.label;
+              return eventsData[label] ? "⚡ " + eventsData[label] : "";
+            },
+            label(ctx) {
+              const src = ctx.dataset.label;
+              const val = ctx.parsed.y;
+              return val !== null ? ` ${src} · Score ${val.toFixed(0)}` : ` ${src} · —`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid:  { color: "rgba(33,38,45,0.6)" },
+          ticks: { color: "#484F58", maxRotation: 45, font: { size: 10, family: "IBM Plex Mono" }, maxTicksLimit: 14 },
+        },
+        y: {
+          min: 0, max: 100,
+          grid:  { color: "rgba(33,38,45,0.8)" },
+          ticks: { color: "#484F58", font: { size: 10, family: "IBM Plex Mono" }, callback: v => v },
+        },
+      },
+    },
+  });
+
+  // Events legend
+  const legendEl = document.getElementById("eventsLegend");
+  legendEl.innerHTML = Object.entries(eventsData).map(([date,desc]) =>
+    `<div class="event-item"><div class="event-dot"></div><b>${esc(date)}</b> — ${esc(desc)}</div>`
+  ).join("");
+}
+
+
+let currentDivView = 'heatmap'; // default to heatmap
+let lastChartData = null, lastEventsData = {};
+
+function setDivView(view) {
+  currentDivView = view;
+  document.getElementById('viewHeatmapBtn').classList.toggle('active', view === 'heatmap');
+  document.getElementById('viewLineBtn').classList.toggle('active', view === 'line');
+  document.getElementById('divLineWrapper').style.display = view === 'line' ? '' : 'none';
+  document.getElementById('divergenceHeatmap').style.display = view === 'heatmap' ? '' : 'none';
+  if (view === 'heatmap' && lastChartData) renderHeatmap(lastChartData, lastEventsData);
+  else if (view === 'line' && lastChartData && !divergenceChart) renderLineChart(lastChartData, lastEventsData);
+}
+
+function heatCell(score) {
+  if (score === null || score === undefined) return null;
+  const hue = Math.round(120 - Math.min(score, 100) * 1.2);
+  const lig = currentTheme === 'dark' ? 36 : 44;
+  return `hsl(${hue}, 60%, ${lig}%)`;
+}
+
+function renderHeatmap(chartData, events) {
+  const container = document.getElementById('divergenceHeatmap');
+  const dates  = chartData.dates  || [];
+  const series = chartData.series || [];
+  if (!dates.length || !series.length) { container.innerHTML = '<div class="empty-state" style="padding:2rem">No data</div>'; return; }
+
+  // Sort sources by average score descending (most divergent first)
+  const sorted = [...series].sort((a, b) => (b.avg_score||0) - (a.avg_score||0));
+
+  // Score lookup: source → date → value
+  const lookup = {};
+  sorted.forEach(s => {
+    lookup[s.source] = {};
+    dates.forEach((d, i) => { lookup[s.source][d] = s.data[i] ?? null; });
+  });
+
+  let html = '';
+
+  // Header row: empty corner + date labels
+  html += '<div class="heatmap-header">';
+  html += '<div class="heatmap-label"></div>';
+  dates.forEach(d => {
+    const lbl = d.slice(5); // MM-DD
+    const hasEvent = events[d] ? ` title="${esc(events[d])}" style="color:var(--accent-amber)"` : '';
+    html += `<div class="heatmap-date"${hasEvent}>${esc(lbl)}</div>`;
+  });
+  html += '</div>';
+
+  // Source rows
+  sorted.forEach(s => {
+    html += '<div class="heatmap-row">';
+    html += `<div class="heatmap-label" style="color:${s.color || 'var(--text-secondary)'}">` + esc(s.source) + '</div>';
+    dates.forEach(d => {
+      const v = lookup[s.source][d];
+      const bg = heatCell(v);
+      if (bg) {
+        html += `<div class="heatmap-cell" style="background:${bg}" title="${esc(s.source)} · ${esc(d)} · ${v !== null ? v.toFixed(0) : '—'}"></div>`;
+      } else {
+        html += `<div class="heatmap-cell no-data" title="${esc(s.source)} · ${esc(d)} · no data"></div>`;
+      }
+    });
+    html += '</div>';
+  });
+
+  // Scale legend
+  html += '<div class="heatmap-scale"><span>0</span><div class="heatmap-scale-bar"></div><span>100</span><span style="margin-left:8px;color:var(--text-muted)">divergence score</span></div>';
+
+  container.innerHTML = html;
+
+  // Wire hover events for cell tooltips
+  const tooltip = document.getElementById('heatmapTooltip');
+  let tooltipTimeout;
+  container.querySelectorAll('.heatmap-cell:not(.no-data)').forEach(cell => {
+    cell.addEventListener('mouseenter', async (e) => {
+      clearTimeout(tooltipTimeout);
+      // Title format: "Source · YYYY-MM-DD · score"
+      const titleParts = cell.title.split(' · ');
+      const srcName = titleParts[0];
+      const dateStr = titleParts[1];
+      const score = titleParts[2] ?? '—';
+      // Show loading state
+      tooltip.innerHTML = `<div class="heatmap-tooltip-source">${esc(srcName)}</div><div class="heatmap-tooltip-date">${esc(dateStr)}</div><div class="heatmap-tooltip-article" style="color:var(--text-muted)">Loading...</div>`;
+      tooltip.style.display = 'block';
+      positionTooltip(e);
+      // Fetch articles
+      try {
+        const resp = await fetch(`/api/articles?sources=${encodeURIComponent(srcName)}&date_from=${dateStr}&date_to=${dateStr}&limit=4`);
+        const data = await resp.json();
+        const articles = data.articles || [];
+        let html2 = `<div class="heatmap-tooltip-source">${esc(srcName)}</div>`;
+        html2 += `<div class="heatmap-tooltip-date">${esc(dateStr)} · score ${score}</div>`;
+        if (articles.length) {
+          articles.forEach(a => {
+            html2 += `<div class="heatmap-tooltip-article">› ${esc(a.title)}</div>`;
+          });
+        } else {
+          html2 += `<div class="heatmap-tooltip-article" style="color:var(--text-muted)">No articles</div>`;
+        }
+        tooltip.innerHTML = html2;
+      } catch(err) {}
+    });
+    cell.addEventListener('mousemove', e => positionTooltip(e));
+    cell.addEventListener('mouseleave', () => {
+      tooltipTimeout = setTimeout(() => { tooltip.style.display = 'none'; }, 200);
+    });
+  });
+}
+
+function positionTooltip(e) {
+  const tt = document.getElementById('heatmapTooltip');
+  const margin = 12;
+  let x = e.clientX + margin;
+  let y = e.clientY + margin;
+  const rect = tt.getBoundingClientRect();
+  if (x + 320 > window.innerWidth) x = e.clientX - 320 - margin;
+  if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - margin;
+  tt.style.left = x + 'px';
+  tt.style.top  = y + 'px';
+}
+
+// Show events toggle
+document.getElementById("showEventsToggle").addEventListener("change", e => {
+  showEvents = e.target.checked;
+  if (currentDivView === 'heatmap' && lastChartData) renderHeatmap(lastChartData, lastEventsData);
+  else divergenceChart?.update();
+});
+
+// Period buttons
+document.querySelectorAll("#divPeriodBtns .pill").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#divPeriodBtns .pill").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    loadDivergenceChart(parseInt(btn.dataset.days)||0);
+  });
+});
+
+// ── DNA Grid ──────────────────────────────────────────────────────────────────
+async function loadDNA() {
+  const [framesData, vocabBySource] = await Promise.all([
+    fetch("/api/frames?source=ALL&days=30").then(r=>r.json()).catch(()=>({frames:{},divergence_scores:{}})),
+    Promise.all(allSources.map(src =>
+      fetch("/api/vocabulary?source=" + encodeURIComponent(src) + "&limit=8")
+        .then(r=>r.json()).catch(()=>({words:[]}))
+        .then(d=>({src, words:d.words||[]}))
+    )),
+  ]);
+
+  const vocabMap = {};
+  vocabBySource.forEach(({src,words}) => { vocabMap[src] = words; });
+
+  const frames    = framesData.frames || {};
+  const divScores = framesData.divergence_scores || {};
+  const container = document.getElementById("dnaGrid");
+
+  if (!allSources.length) {
+    container.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${i18n[currentLang]["state.no_data"] || "No data."}</div>`;
+    return;
+  }
+
+  const sorted = [...allSources].sort((a,b) => (divScores[b]||0) - (divScores[a]||0));
+
+  container.innerHTML = sorted.map(src => {
+    const color    = SOURCE_COLORS[src] || "#888";
+    const score    = divScores[src];
+    const fmap     = frames[src] || {};
+    const total    = Object.values(fmap).reduce((a,b)=>a+b,0) || 1;
+    const dominant = Object.entries(fmap).sort((a,b)=>b[1]-a[1])[0];
+    const artCount = total;
+    const words    = vocabMap[src] || [];
+    const maxCount = Math.max(...words.map(v => v.count), 1);
+    const minCount = Math.min(...words.map(v => v.count), 0);
+    const range = maxCount - minCount || 1;
+
+    const segments = FRAMES_ORDER.filter(f=>(fmap[f]||0)>0).map(f => {
+      const pct = ((fmap[f]||0)/total*100).toFixed(1);
+      return `<div class="dna-bar-segment" style="width:${pct}%;background:${FRAME_COLORS[f]||"#888"}"
+               data-tip="${f}: ${pct}%"></div>`;
+    }).join("");
+
+    const wordTags = words.map(v => {
+      const size = 10 + Math.round(((v.count - minCount) / range) * 12);
+      return `<span class="dna-word" style="font-size:${size}px;opacity:${0.6 + ((v.count-minCount)/range)*0.4};background:${color}18;color:${color}">${esc(v.word)}</span>`;
+    }).join("");
+
+    const scoreBadge = score !== undefined
+      ? `<span class="dna-score-badge" style="color:${color};border:1px solid ${color}40">score: ${score.toFixed(0)}</span>`
+      : "";
+
+    const noDataLabel = i18n[currentLang]["state.no_data"] || "No data.";
+    const vocabLabel  = t('dna.vocab_label','Most used terms');
+    const dominantName = dominant ? t('frame.'+dominant[0], dominant[0]) : '—';
+    return `<div class="dna-card source-card" data-source="${esc(src)}" onclick="filterFeedBySource('${esc(src)}')">
+      <div class="dna-header">
+        <span class="dna-source-name" style="color:${color}">${esc(src)}</span>
+        ${scoreBadge}
+      </div>
+      <div class="dna-bar-container">${segments||'<div style="width:100%;background:var(--border)"></div>'}</div>
+      <div class="dna-vocab-label">${vocabLabel}</div>
+      <div class="dna-vocab">${wordTags||`<span style="color:var(--text-muted);font-size:0.72rem;font-family:var(--mono)">${noDataLabel}</span>`}</div>
+      <div class="dna-footer">${artCount} ${t('dna.articles_30d','articles (30d)')} · ${t('dna.frame_label','frame')}: ${dominantName}</div>
+    </div>`;
+  }).join("");
+
+  renderFrameLegend();
+}
+
+// ── Editorial Compass ─────────────────────────────────────────────────────────
+async function loadCompass() {
+  const data = await fetch('/api/compass?days=30').then(r=>r.json()).catch(()=>({sources:[]}));
+  const sources = data.sources || [];
+  if (!sources.length) return;
+
+  const style = getComputedStyle(document.documentElement);
+  const gridColor = style.getPropertyValue('--border').trim() || 'rgba(33,38,45,0.8)';
+  const textColor = style.getPropertyValue('--text-secondary').trim() || '#8B949E';
+  const mutedColor = style.getPropertyValue('--text-muted').trim() || '#484F58';
+
+  const datasets = sources.map(s => {
+    const r = Math.max(8, Math.min(22, s.total / 4));
+    return {
+      label: s.source,
+      data: [{ x: s.tone_lean * 100, y: s.frame_lean * 100, r }],
+      backgroundColor: s.color + 'BB',
+      borderColor: s.color,
+      borderWidth: 2,
+    };
+  });
+
+  if (window.compassChart && typeof window.compassChart.destroy === 'function') window.compassChart.destroy();
+
+  const ctx = document.getElementById('compassChart').getContext('2d');
+  window.compassChart = new Chart(ctx, {
+    type: 'bubble',
+    data: { datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: items => items[0].dataset.label,
+            label: item => {
+              const s = sources.find(s=>s.source===item.dataset.label);
+              return [
+                ` ${t('compass.x_right','Propagandistic')}: ${item.parsed.x.toFixed(0)}%`,
+                ` ${t('compass.y_top','Narrative')}: ${item.parsed.y.toFixed(0)}%`,
+                ` ${t('compare.distance','Divergence')}: ${s?.div_score ?? '—'}`,
+              ];
+            },
+          },
+          backgroundColor: '#161B22',
+          borderWidth: 1,
+          titleColor: '#E6EDF3',
+          bodyColor: '#8B949E',
+          padding: 10,
+        },
+      },
+      scales: {
+        x: {
+          min: 0, max: 100,
+          title: { display: true, text: t('compass.x_right','Propagandistic') + ' →', color: mutedColor, font: { size: 10, family: 'IBM Plex Mono' } },
+          grid: { color: gridColor },
+          ticks: { color: textColor, font: { size: 9, family: 'IBM Plex Mono' }, callback: v => v + '%' },
+        },
+        y: {
+          min: 0, max: 100,
+          title: { display: true, text: '↑ ' + t('compass.y_top','Narrative framing'), color: mutedColor, font: { size: 10, family: 'IBM Plex Mono' } },
+          grid: { color: gridColor },
+          ticks: { color: textColor, font: { size: 9, family: 'IBM Plex Mono' }, callback: v => v + '%' },
+        },
+      },
+      // Draw source name labels directly on the chart
+      animation: { onComplete() {
+        const chart = this;
+        const ctx2 = chart.ctx;
+        chart.data.datasets.forEach((ds, i) => {
+          const meta = chart.getDatasetMeta(i);
+          meta.data.forEach(pt => {
+            ctx2.save();
+            ctx2.font = '10px IBM Plex Mono';
+            ctx2.fillStyle = '#E6EDF3';
+            ctx2.textAlign = 'center';
+            const rad = (ds.data[0]?.r) || 10;
+            ctx2.fillText(ds.label, pt.x, pt.y - rad - 5);
+            ctx2.restore();
+          });
+        });
+      }},
+    },
+  });
+}
+
+// ── Comparator ────────────────────────────────────────────────────────────────
+function setupComparatorSelects() {
+  const makeOpts = (selected) => allSources.map(s =>
+    `<option value="${esc(s)}"${s===selected?" selected":""}>${esc(s)}</option>`
+  ).join("");
+
+  const defA = allSources.includes("Al Jazeera") ? "Al Jazeera" : allSources[0]||"";
+  const defB = allSources.includes("Reuters")    ? "Reuters"    : allSources[1]||"";
+
+  document.getElementById("compSelectA").innerHTML = makeOpts(defA);
+  document.getElementById("compSelectB").innerHTML = makeOpts(defB);
+
+  document.getElementById("compSelectA").onchange = () => loadComparator();
+  document.getElementById("compSelectB").onchange = () => loadComparator();
+
+  loadComparator();
+}
+
+function buildComparatorInsight(sa, sb, distance) {
+  const fA = sa.dominant_frame, fB = sb.dominant_frame;
+  const tA = sa.dominant_tone,  tB = sb.dominant_tone;
+  const divA = sa.div_score, divB = sb.div_score;
+  const isEn = currentLang !== 'pt';
+  const lines = [];
+
+  // Frame comparison
+  if (fA && fB) {
+    if (fA === fB) {
+      lines.push(isEn
+        ? `Both prioritize the <strong>${t('frame.'+fA, fA)}</strong> frame as their primary narrative lens.`
+        : `Ambas priorizam o frame <strong>${t('frame.'+fA, fA)}</strong> como lente narrativa principal.`);
+    } else {
+      lines.push(isEn
+        ? `<strong>${esc(sa.source)}</strong> leads with <strong>${t('frame.'+fA, fA)}</strong> framing while <strong>${esc(sb.source)}</strong> prioritizes <strong>${t('frame.'+fB, fB)}</strong>.`
+        : `<strong>${esc(sa.source)}</strong> lidera com frame <strong>${t('frame.'+fA, fA)}</strong> enquanto <strong>${esc(sb.source)}</strong> prioriza <strong>${t('frame.'+fB, fB)}</strong>.`);
+    }
+  }
+
+  // Tone comparison
+  if (tA && tB) {
+    if (tA === tB) {
+      lines.push(isEn
+        ? `Both share a <strong>${t('tone.'+tA, tA)}</strong> editorial tone.`
+        : `Ambas compartilham tom editorial <strong>${t('tone.'+tA, tA)}</strong>.`);
+    } else {
+      lines.push(isEn
+        ? `Tones differ: <strong>${esc(sa.source)}</strong> is <strong>${t('tone.'+tA, tA)}</strong>, <strong>${esc(sb.source)}</strong> is <strong>${t('tone.'+tB, tB)}</strong>.`
+        : `Toms distintos: <strong>${esc(sa.source)}</strong> é <strong>${t('tone.'+tA, tA)}</strong>, <strong>${esc(sb.source)}</strong> é <strong>${t('tone.'+tB, tB)}</strong>.`);
+    }
+  }
+
+  // Divergence from global average
+  if (divA != null && divB != null) {
+    const higher = divA > divB ? sa : sb;
+    const lower  = divA > divB ? sb : sa;
+    const hScore = divA > divB ? divA : divB;
+    const lScore = divA > divB ? divB : divA;
+    lines.push(isEn
+      ? `<strong>${esc(higher.source)}</strong> diverges more from global average (${hScore} vs ${lScore}).`
+      : `<strong>${esc(higher.source)}</strong> diverge mais da média global (${hScore} vs ${lScore}).`);
+  }
+
+  // Article volume context
+  const totA = sa.total_articles || 0, totB = sb.total_articles || 0;
+  if (totA > 0 && totB > 0) {
+    lines.push(isEn
+      ? `Based on ${totA} articles from ${esc(sa.source)} and ${totB} from ${esc(sb.source)} (last 30 days).`
+      : `Com base em ${totA} artigos de ${esc(sa.source)} e ${totB} de ${esc(sb.source)} (últimos 30 dias).`);
+  }
+
+  return lines.map(l => `<p style="margin:0 0 0.4rem">${l}</p>`).join('');
+}
+
+function renderFrameLegend() {
+  const el = document.getElementById('frameLegend');
+  if (!el) return;
+  el.innerHTML =
+    `<span class="legend-title">${t('legend.frames','Frames:')}</span>` +
+    FRAMES_ORDER.map(f => {
+      const c = FRAME_COLORS[f] || '#888';
+      return `<span class="legend-chip"><span class="legend-dot" style="background:${c}"></span>${t('frame.'+f, f)}</span>`;
+    }).join('');
+}
+
+function renderToneLegend() {
+  const TONE_COLORS = {
+    neutral: '#8B949E', alarmist: '#F85149', propagandistic: '#D29922',
+    emotional: '#58A6FF', analytical: '#3FB950', technical: '#6E7781', empathetic: '#A371F7'
+  };
+  const el = document.getElementById('toneLegend');
+  if (!el) return;
+  el.innerHTML =
+    `<span class="legend-title">${t('legend.tone','Tone:')}</span>` +
+    Object.entries(TONE_COLORS).map(([tone, c]) =>
+      `<span class="legend-chip"><span class="legend-dot" style="background:${c}"></span>${t('tone.'+tone, tone)}</span>`
+    ).join('');
+}
+
+async function loadComparator() {
+  const srcA = document.getElementById("compSelectA").value;
+  const srcB = document.getElementById("compSelectB").value;
+
+  const data = await fetch(`/api/compare?source_a=${encodeURIComponent(srcA)}&source_b=${encodeURIComponent(srcB)}`)
+    .then(r=>r.json()).catch(()=>null);
+
+  const layout = document.getElementById("comparatorLayout");
+  if (!data) { layout.innerHTML = `<div class="empty-state" style="grid-column:1/-1">${i18n[currentLang]["state.error_compare"] || "Error loading comparison."}</div>`; return; }
+
+  const {source_a, source_b, distance} = data;
+
+  // Destroy old donuts
+  if (donutA) { donutA.destroy(); donutA = null; }
+  if (donutB) { donutB.destroy(); donutB = null; }
+
+  const insight = buildComparatorInsight(source_a, source_b, distance);
+
+  layout.innerHTML = `
+    ${compPanelHTML("A", source_a)}
+    <div class="comp-center">
+      <div style="font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)" data-i18n="compare.distance">Narrative distance</div>
+      <div class="comp-distance-num" style="color:${divColor(distance)}">${distance.toFixed(0)}<span style="font-size:1.2rem;color:var(--text-muted)">/100</span></div>
+      <div class="comp-insight" style="font-size:0.78rem;color:var(--text-secondary);line-height:1.5;margin-top:0.75rem;text-align:left">${insight}</div>
+    </div>
+    ${compPanelHTML("B", source_b)}`;
+
+  buildDonut("donutChartA", source_a, "A");
+  buildDonut("donutChartB", source_b, "B");
+}
+
+function compPanelHTML(side, sd) {
+  const info  = SOURCE_INFO[sd.source] || {};
+  const maxW  = Math.max(...(sd.vocab||[]).map(w=>w.count), 1);
+  const color = sd.color || "#888";
+
+  const toneClass = "badge-tone tone-" + (sd.dominant_tone||"neutral").toLowerCase();
+
+  const vocabHTML = (sd.vocab||[]).slice(0,10).map(w => {
+    const pct = (w.count/maxW*100).toFixed(0);
+    return `<div class="comp-vocab-row">
+      <span class="comp-vocab-word">${esc(w.word)}</span>
+      <div class="comp-vocab-bar-wrap"><div class="comp-vocab-bar" style="width:${pct}%;background:${color}"></div></div>
+    </div>`;
+  }).join("");
+
+  return `<div class="comp-panel">
+    <div class="comp-panel-header">
+      <div class="comp-source-name" style="color:${color}">${esc(sd.source)}</div>
+      <div class="comp-meta">${esc(info.pais||"")} · ${esc(info.orientacao||"")}</div>
+    </div>
+    <div class="comp-donut-wrap"><canvas id="donutChart${side}"></canvas></div>
+    <span class="comp-tone-badge ${toneClass}">${esc(sd.dominant_tone||"—")}</span>
+    <div class="comp-vocab-list">${vocabHTML}</div>
+    ${sd.latest_title ? `<div class="comp-latest">"${esc(sd.latest_title)}"</div>` : ""}
+  </div>`;
+}
+
+function buildDonut(canvasId, sd, key) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const labels = FRAMES_ORDER.filter(f => (sd.frames||{})[f] > 0);
+  const data   = labels.map(f => (sd.frames||{})[f] || 0);
+  const colors = labels.map(f => FRAME_COLORS[f]||"#888");
+
+  const chart = new Chart(canvas.getContext("2d"), {
+    type: "doughnut",
+    data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#161B22",
+          titleColor: "#E6EDF3",
+          bodyColor: "#8B949E",
+          borderColor: "#30363D",
+          borderWidth: 1,
+        },
+      },
+      cutout: "65%",
+    },
+  });
+  if (key === "A") donutA = chart; else donutB = chart;
+}
+
+// ── Feed ──────────────────────────────────────────────────────────────────────
+const FEED_FRAMES = ["humanitarian","military","geopolitical","terrorism","resistance","nuclear","diplomatic"];
+const FEED_TONES  = ["neutral","alarmist","emotional","propagandistic","technical"];
+
+function buildGlobalFilter(sources) {
+  const bar = document.getElementById('global-filter');
+  bar.style.display = '';
+
+  // Source pills
+  const srcContainer = document.getElementById('gf-sources');
+  srcContainer.innerHTML =
+    `<button class="pill active" data-gf-type="source" data-gf-val="__all__" onclick="toggleGfPill(this)">${t('filter.all','All')}</button>` +
+    sources.map(s => {
+      const c = SOURCE_COLORS[s] || '#888';
+      return `<button class="pill source-pill" data-gf-type="source" data-gf-val="${esc(s)}" onclick="toggleGfPill(this)" style="border-color:${c}40;color:${c}"><span class="dot" style="background:${c}"></span>${esc(s)}</button>`;
+    }).join('');
+
+  // Frame pills
+  const frmContainer = document.getElementById('gf-frames');
+  frmContainer.innerHTML =
+    `<button class="pill active" data-gf-type="frame" data-gf-val="__all__" onclick="toggleGfPill(this)">${t('filter.all','All')}</button>` +
+    FEED_FRAMES.map(f => {
+      const c = FRAME_COLORS[f] || '#888';
+      return `<button class="pill" data-gf-type="frame" data-gf-val="${f}" onclick="toggleGfPill(this)" style="color:${c};border-color:${c}40">${t('frame.'+f, f)}</button>`;
+    }).join('');
+}
+
+function toggleGfPill(btn) {
+  const type = btn.dataset.gfType;
+  const val  = btn.dataset.gfVal;
+  const filterSet = type === 'source' ? gf.sources : gf.frames;
+
+  if (val === '__all__') {
+    filterSet.clear();
+  } else if (filterSet.size === 0) {
+    filterSet.add(val);                          // Was All → pick only this
+  } else if (filterSet.has(val) && filterSet.size === 1) {
+    filterSet.clear();                           // Last active → back to All
+  } else {
+    filterSet.has(val) ? filterSet.delete(val) : filterSet.add(val);
+  }
+
+  syncGfPills(type);
+  applyGlobalFilter();
+}
+
+function syncGfPills(type) {
+  const filterSet  = type === 'source' ? gf.sources : gf.frames;
+  const containerId = type === 'source' ? 'gf-sources' : 'gf-frames';
+  const container  = document.getElementById(containerId);
+  if (!container) return;
+  container.querySelectorAll('[data-gf-val]').forEach(p => {
+    const pval = p.dataset.gfVal;
+    if (pval === '__all__') {
+      p.classList.toggle('active', filterSet.size === 0);
+      p.classList.remove('inactive');
+    } else {
+      const sel = filterSet.size === 0 || filterSet.has(pval);
+      p.classList.toggle('active', sel);
+      p.classList.toggle('inactive', filterSet.size > 0 && !filterSet.has(pval));
+    }
+  });
+}
+
+function applyGlobalFilter() {
+  const { sources, frames } = gf;
+  const isFiltered = sources.size > 0 || frames.size > 0;
+
+  // 1. Heatmap: fade out non-matching rows (keep visible but dimmed)
+  const hm = document.getElementById('divergenceHeatmap');
+  if (hm) {
+    hm.querySelectorAll('.heatmap-row').forEach(row => {
+      const lbl = row.querySelector('.heatmap-label');
+      if (!lbl) return;
+      const match = sources.size === 0 || sources.has(lbl.textContent.trim());
+      row.style.opacity = match ? '' : '0.2';
+      row.style.pointerEvents = match ? '' : 'none';
+    });
+  }
+
+  // 2. DNA cards: dim non-matching instead of hiding
+  document.querySelectorAll('.dna-card').forEach(card => {
+    const match = sources.size === 0 || sources.has(card.dataset.source);
+    card.style.opacity = match ? '' : '0.18';
+    card.style.pointerEvents = match ? '' : 'none';
+    card.style.filter = match ? '' : 'grayscale(0.5)';
+  });
+
+  // 3. Compass: dim/hide non-matching bubbles
+  if (window.compassChart) {
+    window.compassChart.data.datasets.forEach(ds => {
+      ds.hidden = sources.size > 0 && !sources.has(ds.label);
+    });
+    window.compassChart.update();
+  }
+
+  // 4. Line chart: show/hide datasets
+  if (divergenceChart) {
+    divergenceChart.data.datasets.forEach((ds, i) => {
+      divergenceChart.setDatasetVisibility(i, sources.size === 0 || sources.has(ds.label));
+    });
+    divergenceChart.update();
+  }
+
+  // 5. Feed: reload without scrolling
+  feedOffset = 0;
+  loadFeed(true);
+
+  // 6. Update filter bar count & state
+  const countEl = document.getElementById('gf-count');
+  const clearBtn = document.getElementById('gf-clear-btn');
+  const bar = document.getElementById('global-filter');
+  if (countEl) {
+    if (sources.size > 0) {
+      countEl.textContent = `${sources.size}/17`;
+    } else if (frames.size > 0) {
+      countEl.textContent = `${frames.size} frame${frames.size > 1 ? 's' : ''}`;
+    } else {
+      countEl.textContent = '';
+    }
+  }
+  if (clearBtn) clearBtn.style.display = isFiltered ? '' : 'none';
+  if (bar) bar.style.borderBottom = isFiltered
+    ? '1px solid rgba(210,153,34,0.4)'
+    : '1px solid var(--border)';
+}
+
+function clearGlobalFilter() {
+  gf.sources.clear();
+  gf.frames.clear();
+  syncGfPills('source');
+  syncGfPills('frame');
+  applyGlobalFilter();
+}
+
+async function loadFeed(reset=false) {
+  if (reset) feedOffset = 0;
+  const params = new URLSearchParams({ limit: 20, offset: feedOffset });
+  [...gf.sources].forEach(s => params.append("source", s));
+
+  const items = await fetch("/api/timeline?" + params.toString())
+    .then(r=>r.json()).catch(()=>[]);
+
+  const filtered = gf.frames.size === 0
+    ? items
+    : items.filter(item => gf.frames.has(item.frame||"") || !item.frame);
+
+  const container = document.getElementById("feedList");
+
+  if (reset) {
+    container.innerHTML = "";
+    renderToneLegend();
+  }
+
+  if (!filtered.length && reset) {
+    container.innerHTML = `<div class="empty-state">${i18n[currentLang]["state.no_articles"] || "No articles for the selected filters."}</div>`;
+    return;
+  }
+
+  const html = filtered.map(item => {
+    const color = SOURCE_COLORS[item.source]||"#888";
+    const toneClass = toneBadgeClass(item.tone);
+    return `<div class="feed-item" data-id="${esc(item.id||"")}" data-lead="${esc(item.lead||"")}">
+      <div class="feed-item-top">
+        <span class="feed-source-badge" style="background:${color}">${esc(item.source)}</span>
+        <span class="feed-title">${item.url
+          ? `<a href="${esc(item.url)}" target="_blank" rel="noopener">${esc(item.title)}</a>`
+          : esc(item.title)}</span>
+        <span class="feed-arrow">›</span>
+      </div>
+      <div class="feed-meta">
+        <span class="feed-time">${fmtDate(item.published_at)} ${fmtTime(item.published_at)}</span>
+        <span class="badge-frame">${esc(t('frame.'+(item.frame||''), item.frame||''))}</span>
+        <span class="${toneClass}">${esc(t('tone.'+(item.tone||''), item.tone||''))}</span>
+      </div>
+      <div class="feed-expand" id="expand-${esc(item.id||"")}">
+        <div style="color:var(--text-secondary);margin-bottom:0.5rem">${esc(item.lead||"")}</div>
+        <div class="feed-explain" id="explain-${esc(item.id||"")}" data-loading="1">${i18n[currentLang]["state.loading_explanation"] || "Loading explanation..."}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  container.insertAdjacentHTML("beforeend", html);
+
+  // Click to expand
+  container.querySelectorAll(".feed-item").forEach(el => {
+    if (el._bound) return;
+    el._bound = true;
+    el.addEventListener("click", async e => {
+      if (e.target.tagName === "A") return;
+      const id  = el.dataset.id;
+      const exp = document.getElementById("expand-" + id);
+      if (!exp) return;
+      const opening = !exp.classList.contains("open");
+      exp.classList.toggle("open");
+      if (opening && id) {
+        const explEl = document.getElementById("explain-" + id);
+        if (explEl && explEl.dataset.loading === "1") {
+          const r = await fetch("/api/explain/" + encodeURIComponent(id) + "?lang=" + currentLang).then(r=>r.json()).catch(()=>({}));
+          explEl.textContent = r.explanation || (i18n[currentLang]["state.explanation_unavailable"] || "Explanation not available.");
+          explEl.dataset.loading = "0";
+        }
+      }
+    });
+  });
+
+  feedOffset += filtered.length;
+}
+
+let feedLoading = false;
+async function loadMoreFeed() {
+  if (feedLoading) return;
+  feedLoading = true;
+  await loadFeed(false);
+  feedLoading = false;
+}
+
+// ── Auto-refresh (60s) ────────────────────────────────────────────────────────
+setInterval(async () => {
+  await loadStats();
+  document.getElementById("navTimestamp").textContent = timeSince(lastUpdatedAt);
+}, 60 * 1000);
+
+// Update "Xmin atrás" display every minute
+setInterval(() => {
+  if (lastUpdatedAt)
+    document.getElementById("navTimestamp").textContent = timeSince(lastUpdatedAt);
+}, 60 * 1000);
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+async function init() {
+  const [, sourcesResp, divData] = await Promise.all([
+    loadStats(),
+    fetch("/api/sources").then(r=>r.json()).catch(()=>({sources:[],colors:{}})),
+    fetch("/api/divergence?days=60").then(r=>r.json()).catch(()=>({dates:[],series:[]})),
+  ]);
+
+  allSources = sourcesResp.sources || [];
+
+  // Hero bars using divergence avg scores
+  const avgScores = {};
+  (divData.series||[]).forEach(s => { avgScores[s.source] = s.avg_score||0; });
+  loadHeroBars(allSources, avgScores);
+
+  await Promise.all([
+    loadDivergenceChart(0),
+    loadDNA(),
+    loadMetricsExtra(),
+    loadCompass(),
+  ]);
+
+  setupComparatorSelects();
+  buildGlobalFilter(allSources);
+  loadFeed(true);
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  setTheme(currentTheme);
+  await init();
+  setLang(currentLang);
+});
+
+// ── i18n ──────────────────────────────────────────────────────────────────
+const i18n = {
+  en: {
+    "nav.divergence": "Divergence",
+    "nav.frames": "Frames",
+    "nav.vocabulary": "Vocabulary",
+    "nav.methodology": "Methodology",
+    "nav.articles": "Articles",
+    "hero.label": "MEDIA INTELLIGENCE DASHBOARD",
+    "hero.title": "The Same War,",
+    "hero.title.em": "Seven Narratives",
+    "hero.subtitle": "How Reuters, BBC, Al Jazeera, RT, NYT and 12 other outlets describe the same events in the US-Israel-Iran war — analyzed by AI",
+    "hero.badge.live": "● LIVE",
+    "hero.badge.articles": "ARTICLES ANALYZED",
+    "hero.badge.sources": "SOURCES MONITORED",
+    "hero.badge.articles.full": "{n} ARTICLES ANALYZED",
+    "hero.badge.sources.full": "{n} SOURCES MONITORED",
+    "hero.cta": "Explore Dashboard ↓",
+    "metrics.divergence.label": "DIVERGENCE SCORE TODAY",
+    "metrics.divergence.sub": "↑11 points vs yesterday",
+    "metrics.frame.label": "DOMINANT FRAME: MILITARY",
+    "metrics.frame.sub": "across all sources",
+    "metrics.tone.label": "ALARMIST TONE",
+    "metrics.tone.sub": "highest since conflict began",
+    "metrics.days.label": "CONFLICT ONGOING",
+    "metrics.days.sub": "since Feb 28, 2026",
+    "section.divergence.title": "How each source drifted from center",
+    "section.divergence.sub": "Score 0 = narrative identical to global average | Score 100 = maximum divergence",
+    "section.frames.title": "The narrative DNA of each source",
+    "section.frames.sub": "Frame distribution and characteristic vocabulary (last 30 days)",
+    "section.compare.title": "Compare two sources",
+    "section.compare.sub": "Select two sources to see how they describe the same events",
+    "section.methodology.title": "How it works",
+    "section.articles.title": "Latest analyzed articles",
+    "compare.distance": "Narrative distance",
+    "compare.aligned": "these sources have aligned narratives",
+    "compare.moderate": "these sources are moderately divergent",
+    "compare.divergent": "these sources have very divergent narratives",
+    "method.gdelt.title": "Collection via RSS Feeds",
+    "method.gdelt.text": "We collect articles directly from official RSS feeds of 17 major news outlets. Feeds are polled every hour. Articles are filtered by publication date (since Feb 28, 2026) and relevance keywords (Iran, Israel, war, strikes, nuclear, etc.). Only articles matching at least one keyword in the title or lead are stored.",
+    "method.ai.title": "AI Frame Classification",
+    "method.ai.text": "Each headline and lead is sent to Claude Haiku (Anthropic) with a structured prompt that extracts: narrative frame (7 categories: military, geopolitical, humanitarian, terrorism, resistance, nuclear, diplomatic), emotional tone (5 categories: neutral, alarmist, propagandistic, analytical, empathetic), and key vocabulary. The model classifies how the text is written — it does not judge factual accuracy.",
+    "method.score.title": "Divergence Score (Bhattacharyya)",
+    "method.score.text": "We compare each source's frame distribution against the equal-weighted daily average across all sources using Bhattacharyya distance — a statistical metric measuring overlap between probability distributions. Score 0 = the source frames the conflict identically to the group average. Score 100 = completely divergent framing. Sources are weighted equally (1 vote per source per day) to prevent high-volume outlets from distorting the global mean.",
+    "method.limits.title": "Important limitations",
+    "method.limits.text": "• RSS feeds return mainly title + excerpt, not full article text\n• Frame classification is probabilistic — same article may score differently on re-analysis\n• English feeds only — Arabic, Hebrew, or Farsi editions may frame events differently\n• Divergence score measures framing difference, not factual accuracy or journalistic quality\n• Some feeds (Haaretz, Xinhua) have paywalls or access restrictions that limit coverage",
+    "articles.load_more": "Load 20 more articles",
+    "articles.why": "Why this frame?",
+    "footer.about": "Narrative Tracker monitors 17 news outlets via RSS to analyze how each frames the US-Israel-Iran conflict. Articles are classified by AI and scored for narrative divergence. Open source project built with Python, Claude AI and Chart.js.",
+    "footer.disclaimer": "Data and analysis for informational and research purposes only. Does not represent the developer's editorial position.",
+    "guided.toggle.on": "Guided Mode ON",
+    "guided.toggle.off": "Guided Mode OFF",
+    "hero.bars.caption": "Live narrative divergence",
+    "chart.period.all": "All",
+    "chart.show_events": "Show events",
+    "compare.vs": "vs",
+    "state.loading": "Loading...",
+    "state.loading_filters": "Loading filters...",
+    "state.loading_articles": "Loading articles...",
+    "state.no_data": "No data.",
+    "state.no_articles": "No articles for the selected filters.",
+    "state.error_compare": "Error loading comparison.",
+    "state.loading_explanation": "Loading explanation...",
+    "state.explanation_unavailable": "Explanation not available.",
+    "dna.vocab_label": "Most used terms",
+    "dna.footer_articles": "articles this week · frame:",
+    "metrics.divergence.dynamic": "divergence",
+    "metrics.days.dynamic": "days",
+    "metrics.frame.pct": "% this week",
+    "footer.about.heading": "About the project",
+    "footer.links.heading": "Links",
+    "footer.links.github": "GitHub",
+    "footer.links.methodology": "Methodology",
+    "footer.links.api": "Public API",
+    "footer.links.report": "Report an issue",
+    "footer.stack.heading": "Tech stack",
+    "method.diagram.title": "Data pipeline",
+    "time.just_now": "just now",
+    "time.min_ago": "min ago",
+    "time.hr_ago": "h ago",
+    "filter.all": "All",
+    "filter.clear_all": "Clear all",
+    "legend.frames": "Frames:",
+    "legend.tone": "Tone:",
+    "filter.source": "Source",
+    "filter.frame": "Frame",
+    "chart.show_default": "Default (6)",
+    "chart.show_all": "Show all (17)",
+    "chart.sources_hint": "Click sources below to toggle",
+    "compare.breakdown.frame": "Frame",
+    "compare.breakdown.tone": "Tone",
+    "compare.breakdown.vocab": "Vocabulary",
+    "guide.metrics": "These four indicators summarize the current state of media coverage. The divergence score shows how fragmented the narrative is across sources. The higher it is, the more sources disagree on how to frame the conflict.",
+    "guide.feed": "Click on any article to expand and see the AI reasoning: why was this headline classified in this frame? The explanation is generated in real time by Claude Haiku.",
+    "guide.divergence": "This chart shows the daily evolution of the divergence score for each source. A rising line means the source is using frames increasingly distinct from the global average. Hover over the chart to see details.",
+    "guide.dna": "Each card shows how a source frames the conflict. The colored bar represents the proportion of each narrative frame. The vocabulary below shows terms with the highest TF-IDF score — words this source uses much more than the others.",
+    "guide.compare": "The comparator shows side by side the frame distribution, vocabulary and tone of two sources. The \"narrative distance\" in the center is calculated using the same Bhattacharyya metric as the main chart — the higher it is, the more divergent the sources are.",
+    "time.today": "today",
+    "time.yesterday": "yesterday",
+    "chart.view_heatmap": "Heatmap",
+    "chart.view_lines": "Lines",
+    "frame.military": "Military",
+    "frame.geopolitical": "Geopolitical",
+    "frame.humanitarian": "Humanitarian",
+    "frame.terrorism": "Terrorism",
+    "frame.resistance": "Resistance",
+    "frame.nuclear": "Nuclear",
+    "frame.diplomatic": "Diplomatic",
+    "tone.neutral": "Neutral",
+    "tone.alarmist": "Alarmist",
+    "tone.propagandistic": "Propagandistic",
+    "tone.analytical": "Analytical",
+    "tone.empathetic": "Empathetic",
+    "tone.technical": "Technical",
+    "tone.emotional": "Emotional",
+    "dna.score": "score",
+    "dna.articles_week": "articles this week",
+    "dna.articles_30d": "articles (30d)",
+    "dna.frame_label": "frame",
+    "compass.title": "Editorial Compass",
+    "compass.sub": "Where each source sits on two axes: tone (neutral → propagandistic) and frame lean (factual/military → narrative/geopolitical)",
+    "compass.x_left": "Neutral tone",
+    "compass.x_right": "Propagandistic",
+    "compass.y_top": "Narrative framing",
+    "compass.y_bottom": "Factual / Military",
+    "compass.q1": "Neutral + Factual",
+    "compass.q2": "Emotional + Factual",
+    "compass.q3": "Neutral + Narrative",
+    "compass.q4": "Emotional + Narrative",
+    "tour.title": "How to read this dashboard",
+    "tour.prev": "← Back",
+    "tour.next": "Next →",
+    "tour.close": "Close tour",
+    "tour.step": "Step",
+    "tour.of": "of",
+    "nav.compass": "Compass",
+    "audit.title": "Transparency & Audit",
+    "audit.close": "Close",
+    "footer.links.audit": "Transparency & Audit",
+    "footer.by": "by",
+  },
+  pt: {
+    "nav.divergence": "Divergência",
+    "nav.frames": "Frames",
+    "nav.vocabulary": "Vocabulário",
+    "nav.methodology": "Metodologia",
+    "nav.articles": "Artigos",
+    "hero.label": "PAINEL DE INTELIGÊNCIA MIDIÁTICA",
+    "hero.title": "A Mesma Guerra,",
+    "hero.title.em": "Sete Narrativas",
+    "hero.subtitle": "Como Reuters, BBC, Al Jazeera, RT, NYT e outros 12 veículos descrevem os mesmos eventos na guerra EUA-Israel-Irã — analisado por IA",
+    "hero.badge.live": "● AO VIVO",
+    "hero.badge.articles": "ARTIGOS ANALISADOS",
+    "hero.badge.sources": "FONTES MONITORADAS",
+    "hero.badge.articles.full": "{n} ARTIGOS ANALISADOS",
+    "hero.badge.sources.full": "{n} FONTES MONITORADAS",
+    "hero.cta": "Explorar o Dashboard ↓",
+    "metrics.divergence.label": "SCORE DE DIVERGÊNCIA HOJE",
+    "metrics.divergence.sub": "↑11 pontos vs ontem",
+    "metrics.frame.label": "FRAME DOMINANTE: MILITAR",
+    "metrics.frame.sub": "em todas as fontes",
+    "metrics.tone.label": "TOM ALARMISTA",
+    "metrics.tone.sub": "maior desde início do conflito",
+    "metrics.days.label": "CONFLITO EM CURSO",
+    "metrics.days.sub": "desde 28 fev 2026",
+    "section.divergence.title": "Como cada fonte se afastou do centro",
+    "section.divergence.sub": "Score 0 = narrativa idêntica à média global | Score 100 = máxima divergência",
+    "section.frames.title": "O DNA narrativo de cada fonte",
+    "section.frames.sub": "Distribuição de frames e vocabulário característico (últimos 30 dias)",
+    "section.compare.title": "Compare duas fontes",
+    "section.compare.sub": "Selecione duas fontes para ver como descrevem os mesmos eventos",
+    "section.methodology.title": "Como funciona",
+    "section.articles.title": "Últimos artigos analisados",
+    "compare.distance": "Distância narrativa",
+    "compare.aligned": "estas fontes têm narrativas alinhadas",
+    "compare.moderate": "estas fontes são moderadamente divergentes",
+    "compare.divergent": "estas fontes têm narrativas muito divergentes",
+    "method.gdelt.title": "Coleta via Feeds RSS",
+    "method.gdelt.text": "Coletamos artigos diretamente dos feeds RSS oficiais de 17 grandes veículos de notícias. Os feeds são verificados a cada hora. Os artigos são filtrados por data de publicação (desde 28/02/2026) e palavras-chave de relevância (Irã, Israel, guerra, ataques, nuclear, etc.). Apenas artigos que contenham ao menos uma palavra-chave no título ou lead são armazenados.",
+    "method.ai.title": "Classificação por IA",
+    "method.ai.text": "Cada título e lead é enviado ao Claude Haiku (Anthropic) com um prompt estruturado que extrai: frame narrativo (7 categorias: militar, geopolítico, humanitário, terrorismo, resistência, nuclear, diplomático), tom emocional (5 categorias: neutro, alarmista, propagandístico, analítico, empático) e vocabulário revelador. O modelo classifica como o texto foi escrito — não julga a veracidade dos fatos.",
+    "method.score.title": "Score de Divergência (Bhattacharyya)",
+    "method.score.text": "Comparamos a distribuição de frames de cada fonte com a média global diária, ponderada igualmente entre todas as fontes, usando distância de Bhattacharyya. Score 0 = a fonte enquadra o conflito exatamente como a média do grupo. Score 100 = framing completamente divergente. Cada fonte vale 1 voto por dia, independente do volume de artigos publicados — isso evita que veículos de alto volume distorçam a média global.",
+    "method.limits.title": "Limitações importantes",
+    "method.limits.text": "• Feeds RSS retornam principalmente título + trecho, não texto completo\n• Classificação de frame é probabilística — o mesmo artigo pode ter score diferente em nova análise\n• Feeds em inglês apenas — edições em árabe, hebraico ou persa podem enquadrar eventos de forma diferente\n• Score de divergência mede diferença de enquadramento, não precisão factual ou qualidade jornalística\n• Alguns feeds (Haaretz, Xinhua) têm paywall ou restrições de acesso que limitam a cobertura",
+    "articles.load_more": "Carregar mais 20 artigos",
+    "articles.why": "Por que este frame?",
+    "footer.about": "Narrative Tracker monitora 17 veículos via RSS para analisar como cada um enquadra o conflito EUA-Israel-Irã. Artigos são classificados por IA e pontuados por divergência narrativa. Projeto open source construído com Python, Claude AI e Chart.js.",
+    "footer.disclaimer": "Dados e análises para fins informativos e de pesquisa. Não representa posição editorial do desenvolvedor.",
+    "guided.toggle.on": "Modo Guiado ATIVADO",
+    "guided.toggle.off": "Modo Guiado DESATIVADO",
+    "hero.bars.caption": "Divergência narrativa ao vivo",
+    "chart.period.all": "Tudo",
+    "chart.show_events": "Mostrar eventos",
+    "compare.vs": "vs",
+    "state.loading": "Carregando...",
+    "state.loading_filters": "Carregando filtros...",
+    "state.loading_articles": "Carregando artigos...",
+    "state.no_data": "Sem dados.",
+    "state.no_articles": "Sem artigos para os filtros selecionados.",
+    "state.error_compare": "Erro ao carregar comparação.",
+    "state.loading_explanation": "Carregando explicação...",
+    "state.explanation_unavailable": "Explicação não disponível.",
+    "dna.vocab_label": "Termos mais usados",
+    "dna.footer_articles": "artigos esta semana · frame:",
+    "metrics.divergence.dynamic": "divergência",
+    "metrics.days.dynamic": "dias",
+    "metrics.frame.pct": "% esta semana",
+    "footer.about.heading": "Sobre o projeto",
+    "footer.links.heading": "Links",
+    "footer.links.github": "GitHub",
+    "footer.links.methodology": "Metodologia",
+    "footer.links.api": "API pública",
+    "footer.links.report": "Reportar erro",
+    "footer.stack.heading": "Stack tecnológico",
+    "method.diagram.title": "Pipeline de dados",
+    "time.just_now": "agora",
+    "time.min_ago": "min atrás",
+    "time.hr_ago": "h atrás",
+    "filter.all": "Todas",
+    "filter.clear_all": "Limpar tudo",
+    "legend.frames": "Frames:",
+    "legend.tone": "Tom:",
+    "filter.source": "Fonte",
+    "filter.frame": "Frame",
+    "chart.show_default": "Padrão (6)",
+    "chart.show_all": "Mostrar todas (17)",
+    "chart.sources_hint": "Clique nas fontes abaixo para filtrar",
+    "compare.breakdown.frame": "Frame",
+    "compare.breakdown.tone": "Tom",
+    "compare.breakdown.vocab": "Vocabulário",
+    "guide.metrics": "Estes quatro indicadores resumem o estado atual da cobertura midiática. O score de divergência mostra o quão fragmentada está a narrativa entre as fontes. Quanto mais alto, mais as fontes discordam sobre como enquadrar o conflito.",
+    "guide.feed": "Clique em qualquer artigo para expandir e ver o raciocínio da IA: por que esse título foi classificado neste frame? A explicação é gerada em tempo real pelo Claude Haiku.",
+    "guide.divergence": "O gráfico mostra a evolução diária do score de divergência de cada fonte. Uma linha subindo indica que a fonte está usando frames cada vez mais distintos da média. Passe o cursor sobre o gráfico para ver os detalhes.",
+    "guide.dna": "Cada card mostra como uma fonte enquadra o conflito. A barra colorida representa a proporção de cada frame narrativo. O vocabulário abaixo são os termos com maior score TF-IDF — palavras que essa fonte usa muito mais do que as outras.",
+    "guide.compare": "O comparador mostra lado a lado a distribuição de frames, vocabulário e tom de duas fontes. A \"distância narrativa\" no centro é calculada com a mesma métrica Bhattacharyya usada no gráfico principal — quanto maior, mais divergentes são as fontes.",
+    "time.today": "hoje",
+    "time.yesterday": "ontem",
+    "chart.view_heatmap": "Mapa de calor",
+    "chart.view_lines": "Linhas",
+    "frame.military": "Militar",
+    "frame.geopolitical": "Geopolítico",
+    "frame.humanitarian": "Humanitário",
+    "frame.terrorism": "Terrorismo",
+    "frame.resistance": "Resistência",
+    "frame.nuclear": "Nuclear",
+    "frame.diplomatic": "Diplomático",
+    "tone.neutral": "Neutro",
+    "tone.alarmist": "Alarmista",
+    "tone.propagandistic": "Propagandístico",
+    "tone.analytical": "Analítico",
+    "tone.empathetic": "Empático",
+    "tone.technical": "Técnico",
+    "tone.emotional": "Emocional",
+    "dna.score": "score",
+    "dna.articles_week": "artigos esta semana",
+    "dna.articles_30d": "artigos (30d)",
+    "dna.frame_label": "frame",
+    "compass.title": "Bússola Editorial",
+    "compass.sub": "Onde cada fonte se posiciona em dois eixos: tom (neutro → propagandístico) e enquadramento (factual/militar → narrativo/geopolítico)",
+    "compass.x_left": "Tom neutro",
+    "compass.x_right": "Propagandístico",
+    "compass.y_top": "Enquadramento narrativo",
+    "compass.y_bottom": "Factual / Militar",
+    "compass.q1": "Neutro + Factual",
+    "compass.q2": "Emocional + Factual",
+    "compass.q3": "Neutro + Narrativo",
+    "compass.q4": "Emocional + Narrativo",
+    "tour.title": "Como ler este painel",
+    "tour.prev": "← Voltar",
+    "tour.next": "Próximo →",
+    "tour.close": "Fechar tour",
+    "tour.step": "Passo",
+    "tour.of": "de",
+    "nav.compass": "Bússola",
+    "audit.title": "Transparência & Auditoria",
+    "audit.close": "Fechar",
+    "footer.links.audit": "Transparência & Auditoria",
+    "footer.by": "por",
+  }
+};
+
+// ── Guided Tour ───────────────────────────────────────────────────────────────
+let tourCurrentStep = 0;
+
+function getTourSteps() {
+  return [
+    {
+      title: currentLang === 'pt' ? 'Bem-vindo ao Narrative Tracker' : 'Welcome to Narrative Tracker',
+      body: currentLang === 'pt'
+        ? `Este painel analisa como <span class="tour-highlight">17 fontes de mídia</span> cobrem a guerra EUA-Israel-Irã. Cada artigo é classificado por IA (<span class="tour-highlight">Claude Haiku</span>) em: <br><br>
+           <span class="tour-metric">Frame narrativo</span> <span class="tour-metric">Tom emocional</span> <span class="tour-metric">Vocabulário revelador</span><br><br>
+           O objetivo não é julgar quem está "certo" — é revelar <span class="tour-highlight">como cada fonte enquadra os mesmos eventos</span>.`
+        : `This dashboard analyzes how <span class="tour-highlight">17 media sources</span> cover the US-Israel-Iran war. Each article is classified by AI (<span class="tour-highlight">Claude Haiku</span>) into:<br><br>
+           <span class="tour-metric">Narrative frame</span> <span class="tour-metric">Emotional tone</span> <span class="tour-metric">Revealing vocabulary</span><br><br>
+           The goal is not to judge who is "right" — it's to reveal <span class="tour-highlight">how each source frames the same events</span>.`,
+      target: null,
+    },
+    {
+      title: currentLang === 'pt' ? 'O Score de Divergência' : 'The Divergence Score',
+      body: currentLang === 'pt'
+        ? `Cada fonte recebe um <span class="tour-highlight">score diário de divergência</span> (0–100) que mede o quão diferente é o seu enquadramento da <strong>média global</strong>.<br><br>
+           <span class="tour-metric" style="color:var(--accent-green)">Score 0</span> = enquadra igual à média &nbsp;&nbsp; <span class="tour-metric" style="color:var(--accent-red)">Score 100</span> = completamente diferente<br><br>
+           Usamos <span class="tour-highlight">distância de Bhattacharyya</span> — métrica estatística que mede sobreposição entre distribuições de probabilidade.`
+        : `Each source gets a daily <span class="tour-highlight">divergence score</span> (0–100) measuring how different its framing is from the <strong>global average</strong>.<br><br>
+           <span class="tour-metric" style="color:var(--accent-green)">Score 0</span> = identical to average &nbsp;&nbsp; <span class="tour-metric" style="color:var(--accent-red)">Score 100</span> = completely different<br><br>
+           We use <span class="tour-highlight">Bhattacharyya distance</span> — a statistical metric measuring overlap between probability distributions.`,
+      target: '#section-divergence',
+    },
+    {
+      title: currentLang === 'pt' ? 'Lendo o Mapa de Calor' : 'Reading the Heatmap',
+      body: currentLang === 'pt'
+        ? `O mapa de calor mostra o score de cada fonte por dia:<br><br>
+           🟢 <strong>Verde</strong> = próximo da média (enquadramento consensual)<br>
+           🟡 <strong>Âmbar</strong> = moderadamente divergente<br>
+           🔴 <strong>Vermelho</strong> = muito divergente da média<br>
+           ⬛ <strong>Vazio</strong> = sem artigos naquele dia<br><br>
+           <span class="tour-highlight">Passe o cursor</span> sobre uma célula para ver os artigos publicados naquele dia.`
+        : `The heatmap shows each source's score per day:<br><br>
+           🟢 <strong>Green</strong> = close to average (consensual framing)<br>
+           🟡 <strong>Amber</strong> = moderately divergent<br>
+           🔴 <strong>Red</strong> = highly divergent from average<br>
+           ⬛ <strong>Empty</strong> = no articles that day<br><br>
+           <span class="tour-highlight">Hover</span> over a cell to see articles published that day.`,
+      target: '#section-divergence',
+    },
+    {
+      title: currentLang === 'pt' ? 'O DNA Narrativo' : 'The Narrative DNA',
+      body: currentLang === 'pt'
+        ? `Cada card mostra o <span class="tour-highlight">"DNA" de uma fonte</span>:<br><br>
+           • A <strong>barra colorida</strong> mostra a proporção de cada frame narrativo<br>
+           • O <strong>vocabulário</strong> são os termos com maior score TF-IDF — palavras que <em>esta fonte</em> usa muito mais do que as outras<br>
+           • O <strong>tamanho</strong> de cada palavra indica sua frequência relativa<br><br>
+           <span class="tour-highlight">Clique em um card</span> para filtrar todos os outros gráficos por essa fonte.`
+        : `Each card shows a source's <span class="tour-highlight">narrative "DNA"</span>:<br><br>
+           • The <strong>color bar</strong> shows the proportion of each narrative frame<br>
+           • The <strong>vocabulary</strong> shows terms with the highest TF-IDF score — words <em>this source</em> uses much more than the others<br>
+           • <strong>Word size</strong> indicates relative frequency<br><br>
+           <span class="tour-highlight">Click a card</span> to filter all other charts by that source.`,
+      target: '#section-dna',
+    },
+    {
+      title: currentLang === 'pt' ? 'A Bússola Editorial' : 'The Editorial Compass',
+      body: currentLang === 'pt'
+        ? `A bússola posiciona cada fonte em dois eixos:<br><br>
+           <strong>Eixo X</strong> → Tom: <span class="tour-highlight">neutro vs propagandístico/alarmista</span><br>
+           <strong>Eixo Y</strong> ↑ Frame: <span class="tour-highlight">militar/factual vs geopolítico/narrativo</span><br><br>
+           O <strong>tamanho do ponto</strong> indica o volume de artigos. Fontes no canto superior direito usam frames narrativos com tom emocional — fontes no canto inferior esquerdo são mais neutras e factuais.`
+        : `The compass positions each source on two axes:<br><br>
+           <strong>X axis</strong> → Tone: <span class="tour-highlight">neutral vs propagandistic/alarmist</span><br>
+           <strong>Y axis</strong> ↑ Frame: <span class="tour-highlight">military/factual vs geopolitical/narrative</span><br><br>
+           <strong>Dot size</strong> indicates article volume. Sources in the top-right use narrative frames with emotional tone — sources in the bottom-left are more neutral and factual.`,
+      target: '#section-compass',
+    },
+    {
+      title: currentLang === 'pt' ? 'Comparando Duas Fontes' : 'Comparing Two Sources',
+      body: currentLang === 'pt'
+        ? `O comparador mostra duas fontes lado a lado. A <span class="tour-highlight">distância narrativa</span> é calculada em três dimensões:<br><br>
+           • <strong>50%</strong> Concordância de frame dominante por dia<br>
+           • <strong>25%</strong> Distribuição de frames (Bhattacharyya)<br>
+           • <strong>25%</strong> Distribuição de toms<br><br>
+           Experimente comparar <span class="tour-metric">RT</span> com <span class="tour-metric">BBC</span> ou <span class="tour-metric">Xinhua</span> com <span class="tour-metric">The Guardian</span>.`
+        : `The comparator shows two sources side by side. The <span class="tour-highlight">narrative distance</span> is calculated on three dimensions:<br><br>
+           • <strong>50%</strong> Daily dominant frame agreement<br>
+           • <strong>25%</strong> Frame distribution (Bhattacharyya)<br>
+           • <strong>25%</strong> Tone distribution<br><br>
+           Try comparing <span class="tour-metric">RT</span> with <span class="tour-metric">BBC</span> or <span class="tour-metric">Xinhua</span> with <span class="tour-metric">The Guardian</span>.`,
+      target: '#section-compare',
+    },
+    {
+      title: currentLang === 'pt' ? 'Os Artigos Analisados' : 'The Analyzed Articles',
+      body: currentLang === 'pt'
+        ? `O feed mostra todos os artigos classificados. <span class="tour-highlight">Clique em qualquer artigo</span> para ver o raciocínio da IA: por que esse título foi classificado neste frame?<br><br>
+           Use os filtros de <strong>fonte</strong> e <strong>frame</strong> para explorar padrões específicos — por exemplo: como <span class="tour-metric">Al Jazeera</span> cobre o frame <span class="tour-metric">humanitarian</span> vs <span class="tour-metric">RT</span>.`
+        : `The feed shows all classified articles. <span class="tour-highlight">Click any article</span> to see the AI reasoning: why was this headline classified in this frame?<br><br>
+           Use the <strong>source</strong> and <strong>frame</strong> filters to explore specific patterns — for example: how does <span class="tour-metric">Al Jazeera</span> cover the <span class="tour-metric">humanitarian</span> frame vs <span class="tour-metric">RT</span>.`,
+      target: '#section-feed',
+    },
+    {
+      title: currentLang === 'pt' ? 'Limitações Importantes' : 'Important Limitations',
+      body: currentLang === 'pt'
+        ? `Antes de usar este painel para tirar conclusões:<br><br>
+           ⚠️ <strong>Feeds RSS</strong> = título + trecho, não texto completo<br>
+           ⚠️ <strong>Classificação de IA</strong> é probabilística, não determinística<br>
+           ⚠️ <strong>Somente inglês</strong> — edições em árabe/hebraico podem diferir<br>
+           ⚠️ <strong>Divergência ≠ falsidade</strong> — uma fonte pode divergir da média sendo mais precisa<br><br>
+           O dashboard é uma <span class="tour-highlight">ferramenta de análise</span>, não um árbitro de verdade.`
+        : `Before drawing conclusions from this dashboard:<br><br>
+           ⚠️ <strong>RSS feeds</strong> = title + excerpt, not full text<br>
+           ⚠️ <strong>AI classification</strong> is probabilistic, not deterministic<br>
+           ⚠️ <strong>English only</strong> — Arabic/Hebrew editions may differ<br>
+           ⚠️ <strong>Divergence ≠ falsehood</strong> — a source can diverge from average by being more accurate<br><br>
+           The dashboard is an <span class="tour-highlight">analysis tool</span>, not a truth arbiter.`,
+      target: null,
+    },
+  ];
+}
+
+function openTour() {
+  tourCurrentStep = 0;
+  document.getElementById('guidedTour').style.display = 'flex';
+  renderTourStep();
+}
+
+function closeTour() {
+  document.getElementById('guidedTour').style.display = 'none';
+}
+
+// ── Mobile Nav ────────────────────────────────────────────────────────────────
+function toggleMobileMenu() {
+  const menu = document.getElementById('navMobileMenu');
+  const btn  = document.getElementById('navHamburger');
+  const open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+function closeMobileMenu() {
+  document.getElementById('navMobileMenu').classList.remove('open');
+  document.getElementById('navHamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+
+// ── Audit Modal ────────────────────────────────────────────────────────────────
+function openAudit() {
+  renderAuditBody();
+  const modal = document.getElementById('auditModal');
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAudit() {
+  document.getElementById('auditModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('auditModal').style.display === 'block') closeAudit();
+});
+
+function renderAuditBody() {
+  const isEn = currentLang !== 'pt';
+  const el = document.getElementById('auditBody');
+  if (!el) return;
+
+  const frameRows = [
+    { frame: 'military',      en: 'Coverage focuses on military operations, strikes, weapons, troop movements, casualties.',              pt: 'Cobertura foca em operações militares, ataques, armas, movimentações de tropas, baixas.' },
+    { frame: 'geopolitical',  en: 'Coverage focuses on state power, alliances, regional order, strategic interests.',                    pt: 'Cobertura foca em poder estatal, alianças, ordem regional, interesses estratégicos.' },
+    { frame: 'humanitarian',  en: 'Coverage focuses on civilian suffering, displacement, casualties among non-combatants.',              pt: 'Cobertura foca no sofrimento civil, deslocamento, baixas entre não-combatentes.' },
+    { frame: 'terrorism',     en: 'Coverage frames one actor as a terrorist organization or characterizes attacks as terrorism.',        pt: 'Cobertura enquadra um ator como organização terrorista ou caracteriza ataques como terrorismo.' },
+    { frame: 'resistance',    en: 'Coverage frames one actor as a resistance/liberation movement against occupation.',                  pt: 'Cobertura enquadra um ator como movimento de resistência/libertação contra ocupação.' },
+    { frame: 'nuclear',       en: 'Coverage focuses on nuclear weapons, proliferation risk, or nuclear deterrence.',                    pt: 'Cobertura foca em armas nucleares, risco de proliferação ou dissuasão nuclear.' },
+    { frame: 'diplomatic',    en: 'Coverage focuses on negotiations, ceasefires, diplomatic channels, international law.',              pt: 'Cobertura foca em negociações, cessar-fogo, canais diplomáticos, direito internacional.' },
+  ];
+
+  const toneRows = [
+    { tone: 'neutral',         en: 'Factual language, passive voice, balanced sourcing, no emotional vocabulary.',                      pt: 'Linguagem factual, voz passiva, fontes equilibradas, sem vocabulário emocional.' },
+    { tone: 'technical',       en: 'Military or legal jargon, precise figures, minimal interpretation.',                                pt: 'Jargão militar ou jurídico, dados precisos, interpretação mínima.' },
+    { tone: 'alarmist',        en: 'Escalatory language, urgent framing, worst-case scenarios foregrounded.',                          pt: 'Linguagem escalatória, enquadramento urgente, piores cenários em destaque.' },
+    { tone: 'emotional',       en: 'Empathy-forward, human-interest language, victim-centered narrative.',                             pt: 'Linguagem centrada na empatia, interesse humano, narrativa centrada na vítima.' },
+    { tone: 'propagandistic',  en: 'Loaded vocabulary, state-aligned framing, clear normative judgment in word choice.',               pt: 'Vocabulário carregado, enquadramento alinhado ao Estado, julgamento normativo claro.' },
+  ];
+
+  el.innerHTML = `
+  <div class="audit-section">
+    <div class="audit-section-title">${isEn ? '1. Classification Prompt (verbatim)' : '1. Prompt de Classificação (verbatim)'}</div>
+    <p class="audit-section-desc">${isEn
+      ? 'Every article title + lead is sent to Claude Haiku with this exact prompt. No fine-tuning, no post-processing beyond JSON parsing.'
+      : 'Cada título + lead de artigo é enviado ao Claude Haiku com este prompt exato. Sem fine-tuning, sem pós-processamento além do parsing JSON.'
+    }</p>
+    <pre class="audit-code"><span style="color:var(--accent-amber)">[SYSTEM]</span>
+You are a media framing analyst. Analyze how the article's title and lead
+frame the US-Israel-Iran war (started Feb 28, 2026).
+Return ONLY valid JSON, no explanation, no markdown.
+
+<span style="color:var(--accent-amber)">[USER]</span>
+Source: {source}
+Title: {title}
+Lead: {lead}
+
+Return JSON:
+{
+  "frame": one of ["humanitarian","military","geopolitical","terrorism",
+                   "resistance","nuclear","diplomatic"],
+  "vocabulary": [5 words or short phrases that reveal the frame],
+  "victim_actor": "who is presented as the victim (one entity name or null)",
+  "tone": one of ["neutral","alarmist","technical","emotional","propagandistic"]
+}</pre>
+    <p class="audit-section-note">${isEn
+      ? 'Model: <code>claude-haiku-4-5-20251001</code> · Temperature: 0 · Max tokens: 200 · Estimated cost per article: ~$0.00015'
+      : 'Modelo: <code>claude-haiku-4-5-20251001</code> · Temperatura: 0 · Tokens máx: 200 · Custo estimado por artigo: ~$0,00015'
+    }</p>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-title">${isEn ? '2. Frame Taxonomy' : '2. Taxonomia de Frames'}</div>
+    <table class="audit-table">
+      <thead><tr><th>${isEn ? 'Frame' : 'Frame'}</th><th>${isEn ? 'Definition' : 'Definição'}</th></tr></thead>
+      <tbody>
+        ${frameRows.map(r => {
+          const c = FRAME_COLORS[r.frame] || '#888';
+          return `<tr>
+            <td><span style="display:inline-flex;align-items:center;gap:5px">
+              <span style="width:8px;height:8px;border-radius:50%;background:${c};flex-shrink:0"></span>
+              <strong style="color:${c}">${t('frame.'+r.frame, r.frame)}</strong>
+            </span></td>
+            <td>${isEn ? r.en : r.pt}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-title">${isEn ? '3. Tone Taxonomy' : '3. Taxonomia de Tons'}</div>
+    <table class="audit-table">
+      <thead><tr><th>${isEn ? 'Tone' : 'Tom'}</th><th>${isEn ? 'Definition' : 'Definição'}</th></tr></thead>
+      <tbody>
+        ${toneRows.map(r => `<tr>
+          <td><strong>${t('tone.'+r.tone, r.tone)}</strong></td>
+          <td>${isEn ? r.en : r.pt}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-title">${isEn ? '4. Divergence Score Formula' : '4. Fórmula do Score de Divergência'}</div>
+    <p class="audit-section-desc">${isEn
+      ? 'Each source receives a daily divergence score that measures how far its frame distribution is from the global average across all sources.'
+      : 'Cada fonte recebe um score diário de divergência que mede o quanto sua distribuição de frames se afasta da média global entre todas as fontes.'
+    }</p>
+    <div class="audit-formula">
+      <div class="audit-formula-line">
+        <span class="audit-formula-label">Bhattacharyya distance</span>
+        <span class="audit-formula-eq">D_BC = −ln( Σ √(p_i · q_i) )</span>
+      </div>
+      <div class="audit-formula-line">
+        <span class="audit-formula-label">${isEn ? 'Composite score' : 'Score composto'}</span>
+        <span class="audit-formula-eq">score = 0.50 × D_daily + 0.25 × D_frame + 0.25 × D_tone</span>
+      </div>
+      <div class="audit-formula-line">
+        <span class="audit-formula-label">${isEn ? 'Normalized (0–100)' : 'Normalizado (0–100)'}</span>
+        <span class="audit-formula-eq">score_norm = min(score × 33.33, 100)</span>
+      </div>
+    </div>
+    <p class="audit-section-note">${isEn
+      ? '<strong>p</strong> = source frame distribution · <strong>q</strong> = global average distribution · D_daily uses day-level frame vectors · D_frame and D_tone use 30-day cumulative distributions'
+      : '<strong>p</strong> = distribuição de frames da fonte · <strong>q</strong> = distribuição média global · D_daily usa vetores de frames por dia · D_frame e D_tone usam distribuições acumuladas 30 dias'
+    }</p>
+  </div>
+
+  <div class="audit-section">
+    <div class="audit-section-title">${isEn ? '5. Public API Endpoints' : '5. Endpoints da API Pública'}</div>
+    <div class="audit-api-list">
+      ${[
+        { path: '/api/sources',          desc: isEn ? 'List all sources with article counts and average divergence' : 'Lista todas as fontes com contagem de artigos e divergência média' },
+        { path: '/api/timeline',         desc: isEn ? 'Recent articles feed (supports ?source= and ?limit= filters)' : 'Feed de artigos recentes (suporta filtros ?source= e ?limit=)' },
+        { path: '/api/divergence',       desc: isEn ? 'Daily divergence time series per source' : 'Série temporal de divergência diária por fonte' },
+        { path: '/api/frames',           desc: isEn ? 'Frame distribution per source (30-day window)' : 'Distribuição de frames por fonte (janela de 30 dias)' },
+        { path: '/api/dna/<source>',     desc: isEn ? 'Full narrative DNA for one source: frames, tones, vocabulary' : 'DNA narrativo completo de uma fonte: frames, tons, vocabulário' },
+        { path: '/api/explain/<id>',     desc: isEn ? 'AI-generated classification rationale for one article (?lang=pt for Portuguese)' : 'Justificativa de classificação gerada por IA para um artigo (?lang=pt para português)' },
+        { path: '/api/compare',          desc: isEn ? 'Side-by-side comparison of two sources (?a=Source1&b=Source2)' : 'Comparação lado a lado de duas fontes (?a=Fonte1&b=Fonte2)' },
+      ].map(ep => `
+        <div class="audit-api-row">
+          <code class="audit-api-path">${ep.path}</code>
+          <span class="audit-api-desc">${ep.desc}</span>
+        </div>`).join('')}
+    </div>
+  </div>
+  `;
+}
+
+function tourStep(delta) {
+  const steps = getTourSteps();
+  tourCurrentStep = Math.max(0, Math.min(steps.length - 1, tourCurrentStep + delta));
+  renderTourStep();
+}
+
+function renderTourStep() {
+  const steps = getTourSteps();
+  const step = steps[tourCurrentStep];
+  const total = steps.length;
+
+  document.getElementById('tourBadge').textContent =
+    `${t('tour.step','Step')} ${tourCurrentStep + 1} ${t('tour.of','of')} ${total}`;
+
+  document.getElementById('tourBody').innerHTML =
+    `<h3>${step.title}</h3>${step.body}`;
+
+  // Dots
+  document.getElementById('tourDots').innerHTML =
+    steps.map((_, i) => `<div class="tour-dot${i === tourCurrentStep ? ' active' : ''}"></div>`).join('');
+
+  // Buttons
+  document.getElementById('tourPrevBtn').disabled = tourCurrentStep === 0;
+  document.getElementById('tourNextBtn').textContent =
+    tourCurrentStep === total - 1 ? t('tour.close','Close tour') : t('tour.next','Next →');
+  document.getElementById('tourNextBtn').onclick =
+    tourCurrentStep === total - 1 ? closeTour : () => tourStep(1);
+
+  // Scroll target section into view
+  if (step.target) {
+    const el = document.querySelector(step.target);
+    if (el) {
+      el.classList.add('visible');
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}
+
+// ── Dashboard State ───────────────────────────────────────────────────────
+const dashState = {
+  selectedSources: new Set(),
+  selectedFrame: null,
+  selectedTone: null,
+  hoveredSource: null,
+};
+
+function applyFilters() {
+  const { selectedSources, selectedFrame } = dashState;
+
+  // 1. Divergence chart — dim unselected sources
+  if (window.divergenceChart) {
+    divergenceChart.data.datasets.forEach(ds => {
+      const sel = selectedSources.size === 0 || selectedSources.has(ds.label);
+      const baseColor = SOURCE_COLORS[ds.label] || '#888';
+      ds.borderColor = sel ? baseColor : baseColor + '26';
+      ds.borderWidth = sel ? 2 : 1;
+      ds.pointRadius = sel ? 3 : 1;
+    });
+    divergenceChart.update('active');
+  }
+
+  // 2. Source cards — dim unselected
+  document.querySelectorAll('.source-card').forEach(card => {
+    const src = card.dataset.source;
+    if (!src) return;
+    const sel = selectedSources.size === 0 || selectedSources.has(src);
+    card.style.opacity = sel ? '1' : '0.25';
+    card.style.transform = sel ? 'scale(1)' : 'scale(0.97)';
+    card.style.transition = 'all 0.3s ease';
+  });
+
+  // 3. Reload articles with filters
+  if (typeof loadFeed === 'function') {
+    window._feedPage = 0;
+    window._feedSources = selectedSources.size > 0 ? [...selectedSources].join(',') : '';
+    window._feedFrame = selectedFrame || '';
+    loadFeed(true);
+  }
+
+  // 4. Update filter pills bar
+  updateFilterPills();
+}
+
+function filterFeedBySource(sourceName) {
+  // Select only this source (toggle: if already sole selection, clear to All)
+  if (gf.sources.size === 1 && gf.sources.has(sourceName)) {
+    gf.sources.clear();
+  } else {
+    gf.sources.clear();
+    gf.sources.add(sourceName);
+  }
+  syncGfPills('source');
+  applyGlobalFilter();
+}
+
+function toggleSourceFilter(sourceName) {
+  if (dashState.selectedSources.has(sourceName)) {
+    dashState.selectedSources.delete(sourceName);
+  } else {
+    dashState.selectedSources.add(sourceName);
+  }
+  applyFilters();
+}
+
+function toggleFrameFilter(frameName) {
+  dashState.selectedFrame = dashState.selectedFrame === frameName ? null : frameName;
+  applyFilters();
+}
+
+function clearAllFilters() {
+  dashState.selectedSources.clear();
+  dashState.selectedFrame = null;
+  dashState.selectedTone = null;
+  applyFilters();
+}
+
+function updateFilterPills() {
+  let bar = document.getElementById('filter-pill-bar');
+  const { selectedSources, selectedFrame } = dashState;
+  const hasPills = selectedSources.size > 0 || selectedFrame;
+
+  if (!hasPills) {
+    if (bar) bar.style.display = 'none';
+    return;
+  }
+
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'filter-pill-bar';
+    const nav = document.getElementById('navbar');
+    if (nav) nav.after(bar);
+    else document.body.prepend(bar);
+  }
+  bar.style.display = 'flex';
+
+  let html = '<div class="pill-bar-inner">';
+  selectedSources.forEach(src => {
+    html += `<span class="filter-pill" onclick="toggleSourceFilter('${esc(src)}')">● ${esc(src)} <span class="pill-x">×</span></span>`;
+  });
+  if (selectedFrame) {
+    html += `<span class="filter-pill frame-pill" onclick="toggleFrameFilter('${esc(selectedFrame)}')">Frame: ${esc(selectedFrame)} <span class="pill-x">×</span></span>`;
+  }
+  const clearLabel = i18n[currentLang]['filter.clear_all'] || 'Clear all';
+  html += `<button class="pill-clear-all" onclick="clearAllFilters()" data-i18n="filter.clear_all">${clearLabel}</button>`;
+  html += '</div>';
+  bar.innerHTML = html;
+}
+
+let currentLang = localStorage.getItem('nt_lang') || 'en';
+
+function t(key, fallback) {
+  return (i18n[currentLang] && i18n[currentLang][key]) || fallback || key;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('nt_lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (i18n[lang] && i18n[lang][key] !== undefined) el.textContent = i18n[lang][key];
+  });
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-pt').classList.toggle('active', lang === 'pt');
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+  // Re-render dynamic badges
+  const badgeA = document.getElementById("heroBadgeArticles");
+  if (badgeA && badgeA.textContent) {
+    const n = badgeA.textContent.match(/\d+/)?.[0];
+    if (n) {
+      const tmpl = i18n[lang]["hero.badge.articles.full"] || "{n} ARTICLES ANALYZED";
+      badgeA.textContent = tmpl.replace("{n}", n);
+    }
+  }
+  const badgeS = document.getElementById("heroBadgeSources");
+  if (badgeS && badgeS.textContent) {
+    const n = badgeS.textContent.match(/\d+/)?.[0];
+    if (n) {
+      const tmpl = i18n[lang]["hero.badge.sources.full"] || "{n} SOURCES MONITORED";
+      badgeS.textContent = tmpl.replace("{n}", n);
+    }
+  }
+  // Re-apply dynamic metric values
+  const divSub = document.getElementById("mcDivSub");
+  if (divSub && divSub.dataset.rawLabel) {
+    const translatedLabel = i18n[lang]["time." + divSub.dataset.rawLabel] || divSub.dataset.rawLabel;
+    divSub.textContent = (i18n[lang]["metrics.divergence.dynamic"] || "divergence") + " " + translatedLabel;
+  }
+  const mcDaysEl = document.getElementById("mcDays");
+  if (mcDaysEl && mcDaysEl.dataset.rawDays) {
+    mcDaysEl.textContent = mcDaysEl.dataset.rawDays + " " + (i18n[lang]["metrics.days.dynamic"] || "days");
+  }
+  const mcFrameSub = document.getElementById("mcFrameSub");
+  if (mcFrameSub && mcFrameSub.dataset.rawPct) {
+    mcFrameSub.textContent = mcFrameSub.dataset.rawPct + (i18n[lang]["metrics.frame.pct"] || "% this week");
+  }
+  // Re-render heatmap scale label
+  if (currentDivView === 'heatmap' && lastChartData) renderHeatmap(lastChartData, lastEventsData);
+  // Refresh navTimestamp
+  if (lastUpdatedAt) document.getElementById('navTimestamp').textContent = timeSince(lastUpdatedAt);
+  // Refresh mcFrame
+  const mcFrameEl = document.getElementById('mcFrame');
+  if (mcFrameEl && mcFrameEl.dataset.rawFrame) mcFrameEl.textContent = t('frame.' + mcFrameEl.dataset.rawFrame, mcFrameEl.dataset.rawFrame);
+  // Re-render legends (text changes with language)
+  renderFrameLegend();
+  renderToneLegend();
+  // Re-render global filter frame pill labels
+  const frmContainer = document.getElementById('gf-frames');
+  if (frmContainer) {
+    frmContainer.querySelectorAll('[data-gf-val]:not([data-gf-val="__all__"])').forEach(btn => {
+      const f = btn.dataset.gfVal;
+      btn.childNodes[0].textContent = t('frame.'+f, f);
+    });
+    const allBtn = frmContainer.querySelector('[data-gf-val="__all__"]');
+    if (allBtn) allBtn.textContent = t('filter.all','All');
+  }
+  // Refresh source All pill label
+  const srcAll = document.querySelector('#gf-sources [data-gf-val="__all__"]');
+  if (srcAll) srcAll.textContent = t('filter.all','All');
+
+  if (location.hostname === 'localhost') {
+    const untranslated = document.querySelectorAll('[data-i18n]').length;
+    const missing = [...document.querySelectorAll('[data-i18n]')]
+      .filter(el => !i18n[lang][el.dataset.i18n]).length;
+    if (missing === 0) console.log(`i18n: 0 untranslated strings found (${untranslated} keys)`);
+    else console.warn(`i18n: ${missing} untranslated strings found`);
+  }
+}
+
+// ── Contrast Audit (localhost only) ───────────────────────────────────────
+function runContrastAudit() {
+  if (location.hostname !== 'localhost') return;
+  const style = getComputedStyle(document.documentElement);
+
+  function hexToRgb(hex) {
+    hex = hex.trim().replace('#','');
+    if (hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
+    const n = parseInt(hex, 16);
+    return [n>>16&255, n>>8&255, n&255];
+  }
+
+  function cssVarToRgb(varName) {
+    const val = style.getPropertyValue(varName).trim();
+    if (val.startsWith('#')) return hexToRgb(val);
+    if (val.startsWith('rgb')) {
+      const m = val.match(/\d+/g);
+      return m ? [+m[0],+m[1],+m[2]] : null;
+    }
+    return null;
+  }
+
+  function linearize(c) {
+    c /= 255;
+    return c <= 0.04045 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4);
+  }
+
+  function luminance([r,g,b]) {
+    return 0.2126*linearize(r) + 0.7152*linearize(g) + 0.0722*linearize(b);
+  }
+
+  function contrast(fg, bg) {
+    const L1 = Math.max(luminance(fg), luminance(bg));
+    const L2 = Math.min(luminance(fg), luminance(bg));
+    return (L1 + 0.05) / (L2 + 0.05);
+  }
+
+  const checks = [
+    ['--text-primary',   '--bg-card',     4.5, 'text-primary on bg-card'],
+    ['--text-secondary', '--bg-card',     4.5, 'text-secondary on bg-card'],
+    ['--text-muted',     '--bg-card',     3.0, 'text-muted on bg-card (UI)'],
+    ['--text-primary',   '--bg-elevated', 4.5, 'text-primary on bg-elevated'],
+    ['--text-secondary', '--bg-elevated', 3.0, 'text-secondary on bg-elevated'],
+    ['--text-primary',   '--bg-deep',     4.5, 'text-primary on bg-deep'],
+    ['--accent-amber',   '--bg-card',     3.0, 'accent-amber on bg-card'],
+    ['--accent-blue',    '--bg-card',     3.0, 'accent-blue on bg-card'],
+    ['--accent-green',   '--bg-card',     3.0, 'accent-green on bg-card'],
+    ['--accent-red',     '--bg-card',     3.0, 'accent-red on bg-card'],
+  ];
+
+  const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+  console.group(`Contrast Audit (${theme} mode)`);
+  let issues = 0;
+  checks.forEach(([fg, bg, min, label]) => {
+    const fgRgb = cssVarToRgb(fg);
+    const bgRgb = cssVarToRgb(bg);
+    if (!fgRgb || !bgRgb) return;
+    const ratio = contrast(fgRgb, bgRgb);
+    const pass = ratio >= min;
+    if (!pass) {
+      console.warn(`FAIL ${label}: ${ratio.toFixed(2)} (need ${min})`);
+      issues++;
+    } else {
+      console.log(`PASS ${label}: ${ratio.toFixed(2)}`);
+    }
+  });
+  if (issues === 0) console.log('All contrast checks passed ✓');
+  console.groupEnd();
+}
+
+// ── Theme ─────────────────────────────────────────────────────────────────
+let currentTheme = localStorage.getItem('nt_theme')
+  || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+function setTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('nt_theme', theme);
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.textContent = theme === 'dark' ? '☀' : '☾';
+    btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  }
+  if (divergenceChart || donutA || donutB) updateChartsTheme(theme);
+  runContrastAudit();
+}
+
+function updateChartsTheme(theme) {
+  const style = getComputedStyle(document.documentElement);
+  const gridColor = style.getPropertyValue('--border').trim();
+  const tickColor = style.getPropertyValue('--text-secondary').trim();
+  // Use module-scoped variables, not window.* (let declarations don't attach to window)
+  [divergenceChart, donutA, donutB].forEach(chart => {
+    if (!chart || !chart.options) return;
+    if (chart.options.scales?.x) {
+      chart.options.scales.x.grid.color = gridColor;
+      chart.options.scales.x.ticks.color = tickColor;
+      chart.options.scales.y.grid.color = gridColor;
+      chart.options.scales.y.ticks.color = tickColor;
+    }
+    chart.update();
+  });
+}
+</script>
+
+<div id="heatmapTooltip" class="heatmap-tooltip"></div>
+<div id="guidedTour" class="tour-overlay" style="display:none">
+  <div class="tour-backdrop"></div>
+  <div class="tour-panel">
+    <div class="tour-header">
+      <span class="tour-step-badge" id="tourBadge">Step 1 of 8</span>
+      <button class="tour-close-btn" onclick="closeTour()" data-i18n="tour.close">Close tour</button>
+    </div>
+    <div class="tour-body" id="tourBody"></div>
+    <div class="tour-footer">
+      <button class="tour-btn secondary" id="tourPrevBtn" onclick="tourStep(-1)" data-i18n="tour.prev">← Back</button>
+      <div class="tour-dots" id="tourDots"></div>
+      <button class="tour-btn primary" id="tourNextBtn" onclick="tourStep(1)" data-i18n="tour.next">Next →</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

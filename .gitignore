@@ -1,0 +1,12 @@
+articles.db
+.env
+__pycache__/
+.venv/
+*.pyc
+*.pyo
+.collector_state.json
+marketing/slides/*.png
+*.egg-info/
+dist/
+.DS_Store
+*.log

@@ -1,0 +1,18 @@
+[project]
+name = "narrative-tracker"
+version = "0.1.0"
+description = "Coleta e analisa cobertura midiática da guerra EUA-Israel-Irã"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "requests>=2.32.0",
+    "python-dotenv>=1.0.0",
+    "flask>=3.1.3",
+    "feedparser>=6.0.12",
+    "playwright>=1.58.0",
+    "pillow>=12.1.1",
+]
+
+[dependency-groups]
+dev = []
