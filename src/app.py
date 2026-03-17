@@ -912,7 +912,32 @@ def api_compass():
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port  = int(os.environ.get("PORT", 5000))
     debug = os.environ.get("FLASK_ENV") == "development"
+
+    # ── Background scheduler (only in production / non-debug) ───────────────
+    if not debug:
+        import threading, subprocess as _sp, sys as _sys2
+        from pathlib import Path as _Path
+
+        _SRC = _Path(__file__).parent
+
+        def _scheduler_loop():
+            import time
+            cycle = 0
+            while True:
+                time.sleep(3600)          # wait first, then run
+                cycle += 1
+                print(f"[scheduler] ciclo #{cycle} iniciando…", flush=True)
+                for script in ("collector.py", "analyzer.py", "scorer.py"):
+                    _sp.run([_sys2.executable, str(_SRC / script)],
+                            env={**os.environ, "PYTHONUNBUFFERED": "1"})
+                print(f"[scheduler] ciclo #{cycle} concluído.", flush=True)
+
+        t = threading.Thread(target=_scheduler_loop, daemon=True, name="scheduler")
+        t.start()
+        print("Scheduler background thread started (interval: 60 min)", flush=True)
+    # ────────────────────────────────────────────────────────────────────────
+
     print(f"Dashboard: http://0.0.0.0:{port}")
     app.run(debug=debug, host="0.0.0.0", port=port, use_reloader=False)
