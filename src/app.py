@@ -915,42 +915,101 @@ def api_compass():
 # Entry point
 # ---------------------------------------------------------------------------
 
+import threading as _threading, subprocess as _sp, sys as _sys2
+from pathlib import Path as _Path
+
+_SRC = _Path(__file__).parent
+_scheduler_log: list[str] = []   # rolling in-memory log for /api/debug
+_MAX_LOG = 200                    # lines to keep
+
+
+def _sched_print(msg: str):
+    print(msg, flush=True)
+    _scheduler_log.append(msg)
+    if len(_scheduler_log) > _MAX_LOG:
+        del _scheduler_log[:-_MAX_LOG]
+
+
+def _run_script(script: str) -> bool:
+    """Run a pipeline script, log all stdout+stderr. Returns True on success."""
+    import time as _time
+    t0 = _time.time()
+    _sched_print(f"[scheduler] running {script} ...")
+    result = _sp.run(
+        [_sys2.executable, str(_SRC / script)],
+        env={**os.environ, "PYTHONUNBUFFERED": "1"},
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+    )
+    elapsed = _time.time() - t0
+    # Always log stdout (trimmed to last 800 chars)
+    if result.stdout.strip():
+        for line in result.stdout.strip().splitlines()[-20:]:
+            _sched_print(f"  [{script}] {line}")
+    if result.returncode != 0:
+        _sched_print(f"[scheduler] FAILED {script} (rc={result.returncode}, {elapsed:.1f}s)")
+        if result.stderr.strip():
+            for line in result.stderr.strip().splitlines()[-30:]:
+                _sched_print(f"  [{script}:err] {line}")
+        return False
+    _sched_print(f"[scheduler] OK {script} ({elapsed:.1f}s)")
+    return True
+
+
+_scheduler_cycle = 0
+_scheduler_last_run: str = ""
+
+
+def _scheduler_loop():
+    import time as _time
+    global _scheduler_cycle, _scheduler_last_run
+    _time.sleep(15)    # let Flask finish startup first
+    while True:
+        _scheduler_cycle += 1
+        _scheduler_last_run = datetime.now(timezone.utc).isoformat()
+        db_path = os.environ.get("DB_PATH", "NOT_SET")
+        _sched_print(f"[scheduler] cycle={_scheduler_cycle} DB={db_path}")
+        for script in ("collector.py", "analyzer.py", "scorer.py"):
+            ok = _run_script(script)
+            if not ok and script == "collector.py":
+                _sched_print("[scheduler] collector failed, skipping rest of cycle")
+                break
+        _sched_print(f"[scheduler] cycle={_scheduler_cycle} done, sleeping 3600s")
+        _time.sleep(3600)
+
+
+@app.route("/api/debug")
+def api_debug():
+    """Returns internal state: DB path, table counts, scheduler log."""
+    db = get_db()
+    tables = {}
+    for tbl in ("articles", "analyses", "divergence_scores", "vocabulary_by_source"):
+        try:
+            tables[tbl] = db.execute(f"SELECT COUNT(*) FROM {tbl}").fetchone()[0]
+        except Exception as e:
+            tables[tbl] = f"ERROR: {e}"
+    analyzed = db.execute("SELECT COUNT(*) FROM articles WHERE analyzed=1").fetchone()[0]
+    unanalyzed = db.execute("SELECT COUNT(*) FROM articles WHERE analyzed=0").fetchone()[0]
+    last_collected = db.execute("SELECT MAX(collected_at) FROM articles").fetchone()[0]
+    return jsonify({
+        "db_path":          DB_PATH,
+        "tables":           tables,
+        "analyzed":         analyzed,
+        "unanalyzed":       unanalyzed,
+        "last_collected":   last_collected,
+        "scheduler_cycle":  _scheduler_cycle,
+        "scheduler_last":   _scheduler_last_run,
+        "log_tail":         _scheduler_log[-50:],
+    })
+
+
 if __name__ == "__main__":
     port  = int(os.environ.get("PORT", 5000))
     debug = os.environ.get("FLASK_ENV") == "development"
 
-    # ── Background scheduler (only in production / non-debug) ───────────────
     if not debug:
-        import threading, subprocess as _sp, sys as _sys2
-        from pathlib import Path as _Path
-
-        _SRC = _Path(__file__).parent
-
-        def _scheduler_loop():
-            import time
-            time.sleep(15)                # let Flask finish startup first
-            cycle = 0
-            while True:
-                cycle += 1
-                print(f"[scheduler] ciclo #{cycle} iniciando… DB={os.environ.get('DB_PATH','?')}", flush=True)
-                for script in ("collector.py", "analyzer.py", "scorer.py"):
-                    print(f"[scheduler] rodando {script}…", flush=True)
-                    result = _sp.run(
-                        [_sys2.executable, str(_SRC / script)],
-                        env={**os.environ, "PYTHONUNBUFFERED": "1"},
-                        capture_output=True, text=True
-                    )
-                    if result.returncode != 0:
-                        print(f"[scheduler] ERRO em {script}: {result.stderr[-500:]}", flush=True)
-                    else:
-                        print(f"[scheduler] {script} OK", flush=True)
-                print(f"[scheduler] ciclo #{cycle} concluido.", flush=True)
-                time.sleep(3600)          # sleep AFTER running, not before
-
-        t = threading.Thread(target=_scheduler_loop, daemon=True, name="scheduler")
+        t = _threading.Thread(target=_scheduler_loop, daemon=True, name="scheduler")
         t.start()
-        print("Scheduler background thread started (interval: 60 min)", flush=True)
-    # ────────────────────────────────────────────────────────────────────────
+        print("Scheduler started (interval: 3600s)", flush=True)
 
     print(f"Dashboard: http://0.0.0.0:{port}")
     app.run(debug=debug, host="0.0.0.0", port=port, use_reloader=False)
