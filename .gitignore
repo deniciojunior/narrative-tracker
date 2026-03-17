@@ -10,3 +10,10 @@ marketing/slides/*.png
 dist/
 .DS_Store
 *.log
+
+# Internal / dev only
+.claude/
+_find_claude.ps1
+check_dupes.py
+db_check.py
+fix_iheart.py
