@@ -67,11 +67,15 @@ _SEED_PATH = os.path.join(_HERE, "..", "seed.db")
 _DB_ABS = os.path.abspath(DB_PATH)
 
 def _needs_seed(_path):
-    """True if DB missing or has no rows in articles table."""
+    """True if DB missing, articles empty, or analyses table absent."""
     if not os.path.exists(_path):
         return True
     try:
         _c = sqlite3.connect(_path)
+        tables = {r[0] for r in _c.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
+        if "analyses" not in tables:
+            _c.close()
+            return True
         _n = _c.execute("SELECT COUNT(*) FROM articles").fetchone()[0]
         _c.close()
         return _n == 0
